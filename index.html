@@ -5,7 +5,6 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Pendaftaran Semarang — Indomaret Fun Run 2026</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Anton&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
@@ -156,7 +155,7 @@
     background: white; border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer;
     transition: all 0.2s; font-size: 16px; font-weight: bold; color: var(--blue);
   }
-  .qty-btn:hover { background: var(--blue-soft); border-color: var(--blue); }
+  .qty-btn:hover:not(:disabled) { background: var(--blue-soft); border-color: var(--blue); }
   .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
   .qty-input {
     width: 60px; height: 44px; text-align: center; font-weight: 800; font-size: 18px;
@@ -165,7 +164,7 @@
 
   .card { background: white; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.04); }
   .btn-primary { background: var(--blue); color: white; font-weight: 700; border-radius: 10px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,85,164,0.25); }
-  .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,85,164,0.35); }
+  .btn-primary:hover:not(:disabled) { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,85,164,0.35); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .btn-secondary { background: white; color: var(--ink); border: 1.5px solid var(--line); font-weight: 600; border-radius: 10px; transition: all 0.2s; }
   .btn-secondary:hover { border-color: var(--ink); background: #F5F5F7; }
@@ -333,7 +332,10 @@
 </div>
 </div>
 <div class="card p-6 md:p-10 relative z-10">
-<form id="regForm" onsubmit="return false;">
+<form id="regForm" action="https://formspree.io/f/mkodppbj" method="POST" enctype="multipart/form-data" autocomplete="on" novalidate>
+<input type="hidden" name="_subject" value="🎟️ Pendaftaran Baru - Indomaret Fun Run 2026 Semarang"/>
+<input type="hidden" name="_template" value="table"/>
+<input type="hidden" name="_captcha" value="false"/>
 <div class="step-panel active" data-panel="1">
 <div class="flex items-center gap-3 mb-1">
 <div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
@@ -343,15 +345,15 @@
 <div class="grid md:grid-cols-2 gap-5">
 <div class="md:col-span-2">
 <label class="field-label">Nama Lengkap <span class="req">*</span></label>
-<input class="field px-4 py-3" name="nama" placeholder="Contoh: Budi Santoso" required="" type="text"/>
+<input autocomplete="name" class="field px-4 py-3" name="nama" placeholder="Contoh: Budi Santoso" required="" type="text"/>
 </div>
 <div>
 <label class="field-label">NIK / No. KTP <span class="req">*</span></label>
-<input class="field px-4 py-3 font-mono" maxlength="16" name="nik" placeholder="16 digit NIK" required="" type="text"/>
+<input autocomplete="off" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="16" name="nik" pattern="[0-9]{16}" placeholder="16 digit NIK" required="" type="text"/>
 </div>
 <div>
 <label class="field-label">Tanggal Lahir <span class="req">*</span></label>
-<input class="field px-4 py-3" name="tgl_lahir" required="" type="date"/>
+<input autocomplete="bday" class="field px-4 py-3" name="tgl_lahir" required="" type="date"/>
 </div>
 <div>
 <label class="field-label">Jenis Kelamin <span class="req">*</span></label>
@@ -365,12 +367,12 @@
 <label class="field-label">No. WhatsApp <span class="req">*</span></label>
 <div class="relative">
 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
-<input class="field pl-12 pr-4 py-3 font-mono" name="wa" placeholder="812 3456 7890" required="" type="tel"/>
+<input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="wa" placeholder="812 3456 7890" required="" type="tel"/>
 </div>
 </div>
 <div>
 <label class="field-label">Email Aktif <span class="req">*</span></label>
-<input class="field px-4 py-3" name="email" placeholder="email@contoh.com" required="" type="email"/>
+<input autocomplete="email" class="field px-4 py-3" name="email" placeholder="email@contoh.com" required="" type="email"/>
 </div>
 <div>
 <label class="field-label">Kategori Tiket <span class="req">*</span></label>
@@ -421,7 +423,7 @@
 <div class="grid md:grid-cols-2 gap-5">
 <div class="md:col-span-2">
 <label class="field-label">Alamat Lengkap <span class="req">*</span></label>
-<textarea class="field px-4 py-3" name="alamat" placeholder="Jalan, nomor rumah, RT/RW, kelurahan" required="" rows="2"></textarea>
+<textarea autocomplete="street-address" class="field px-4 py-3" name="alamat" placeholder="Jalan, nomor rumah, RT/RW, kelurahan" required="" rows="2"></textarea>
 </div>
 <div>
 <label class="field-label">Kota / Kabupaten <span class="req">*</span></label>
@@ -433,7 +435,7 @@
 </div>
 <div>
 <label class="field-label">Kode Pos</label>
-<input class="field px-4 py-3 font-mono" maxlength="5" name="kode_pos" placeholder="Contoh: 50131" type="text"/>
+<input autocomplete="postal-code" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="5" name="kode_pos" placeholder="Contoh: 50131" type="text"/>
 </div>
 <div>
 <label class="field-label">Golongan Darah <span class="req">*</span></label>
@@ -452,7 +454,7 @@
 <div class="grid md:grid-cols-2 gap-5">
 <div>
 <label class="field-label">Nama Kontak Darurat <span class="req">*</span></label>
-<input class="field px-4 py-3" name="nama_darurat" placeholder="Contoh: Siti Aminah" required="" type="text"/>
+<input autocomplete="off" class="field px-4 py-3" name="nama_darurat" placeholder="Contoh: Siti Aminah" required="" type="text"/>
 </div>
 <div>
 <label class="field-label">Hubungan <span class="req">*</span></label>
@@ -465,7 +467,7 @@
 <label class="field-label">No. HP Kontak Darurat <span class="req">*</span></label>
 <div class="relative">
 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
-<input class="field pl-12 pr-4 py-3 font-mono" name="hp_darurat" placeholder="812 3456 7890" required="" type="tel"/>
+<input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="hp_darurat" placeholder="812 3456 7890" required="" type="tel"/>
 </div>
 </div>
 <div class="md:col-span-2">
@@ -576,7 +578,7 @@
 <div class="step-panel" data-panel="4">
 <div class="text-center max-w-2xl mx-auto py-8">
 <div class="flex justify-center mb-6 no-print">
-<svg height="80" viewbox="0 0 52 52" width="80">
+<svg height="80" viewBox="0 0 52 52" width="80">
 <circle class="check-circle" cx="26" cy="26" fill="none" r="25" stroke="#10B981" stroke-width="3"></circle>
 <path class="check-mark" d="M14 27 l8 8 l16 -16" fill="none" stroke="#10B981" stroke-width="4"></path>
 </svg>
@@ -585,7 +587,7 @@
 <p class="text-[var(--muted)] mb-8">Selamat! Pembayaran Anda sedang diverifikasi. Tunjukkan QR Code tiket di bawah ini saat pengambilan race pack atau saat check-in di lokasi.</p>
 <div class="flex justify-center mb-8">
 <div class="qr-frame">
-<img alt="QR Tiket" id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=IMFR-2026-SEMARANG-001"/>
+<img alt="QR Tiket" id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=IMFR-2026-SEMARANG-001"/>
 </div>
 </div>
 <div class="bg-[var(--cream)] rounded-xl p-6 border border-[var(--line)] text-left mb-8">
@@ -633,30 +635,26 @@
 (function() {
   "use strict";
 
-  var EMAILJS_SERVICE_ID = 'service_twdn07d';
-  var EMAILJS_TEMPLATE_ID = 'template_7j66o4v';
-  var EMAILJS_PUBLIC_KEY = 'QsfKfQNe35irrZbKP';
+  // ============ KONFIGURASI FORMSPREE ============
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/mkodppbj";
 
-  try {
-    if (typeof emailjs !== 'undefined') {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    }
-  } catch (e) {
-    console.error("EmailJS init failed:", e);
-  }
-
-  var CITY = 'SEMARANG';
-  var totalSteps = 4;
-  var currentStep = 1;
-  var ticketQty = 1;
+  // ============ KONSTANTA ============
+  var CITY = "SEMARANG";
+  var TOTAL_STEPS = 4;
   var MAX_QTY = 10;
   var MIN_QTY = 1;
 
-  var $ = function(sel, ctx) { return (ctx || document).querySelector(sel); };
-  var $$ = function(sel, ctx) { return (ctx || document).querySelectorAll(sel); };
+  // ============ STATE ============
+  var currentStep = 1;
+  var ticketQty = 1;
 
+  // ============ HELPER ============
+  var $ = function(sel, ctx) { return (ctx || document).querySelector(sel); };
+  var $$ = function(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+
+  // ============ ANIMASI COUNTER TIKET ============
   function animateTicketCount() {
-    var el = $('#ticketCount');
+    var el = $("#ticketCount");
     if (!el) return;
     var target = 9;
     var duration = 1500;
@@ -665,79 +663,106 @@
       var progress = Math.min((now - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.floor(eased * target);
-      if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = target;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
     }
     requestAnimationFrame(step);
   }
 
+  // ============ NAVIGASI STEP ============
   function goToStep(step) {
-    $$('.step-panel').forEach(function(p) { p.classList.remove('active'); });
-    $('.step-panel[data-panel="' + step + '"]').classList.add('active');
-    $$('.step-node').forEach(function(node) {
-      var nodeStep = parseInt(node.dataset.step);
-      node.classList.remove('active', 'done');
+    $$(".step-panel").forEach(function(p) { p.classList.remove("active"); });
+    var panel = $('.step-panel[data-panel="' + step + '"]');
+    if (panel) panel.classList.add("active");
+
+    $$(".step-node").forEach(function(node) {
+      var nodeStep = parseInt(node.dataset.step, 10);
+      node.classList.remove("active", "done");
       if (nodeStep < step) {
-        node.classList.add('done');
+        node.classList.add("done");
         node.innerHTML = '<i class="fa-solid fa-check"></i>';
-      } else if (nodeStep === step) {
-        node.classList.add('active');
-        node.textContent = String(nodeStep).padStart(2, '0');
       } else {
-        node.textContent = String(nodeStep).padStart(2, '0');
+        node.textContent = String(nodeStep).padStart(2, "0");
+        if (nodeStep === step) node.classList.add("active");
       }
     });
-    $('#progressLine').style.width = ((step - 1) / (totalSteps - 1)) * 100 + '%';
+
+    var line = $("#progressLine");
+    if (line) line.style.width = ((step - 1) / (TOTAL_STEPS - 1)) * 100 + "%";
+
+    // Update label warna
+    $$(".step-label").forEach(function(label, idx) {
+      label.classList.toggle("text-[var(--muted)]", (idx + 1) !== step);
+    });
+
     currentStep = step;
-    var main = $('#formSection');
-    var top = main.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top: top, behavior: 'smooth' });
+
+    var main = $("#formSection");
+    if (main) {
+      var top = main.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    }
   }
 
+  // ============ VALIDASI ============
   function validateStep(step) {
     var panel = $('.step-panel[data-panel="' + step + '"]');
-    var requiredFields = panel.querySelectorAll('[required]');
+    if (!panel) return true;
+
+    var requiredFields = panel.querySelectorAll("[required]");
     var valid = true;
     var firstInvalid = null;
+
     requiredFields.forEach(function(field) {
-      if (!field.value.trim()) {
+      var value = (field.value || "").trim();
+      var isInvalid = !value;
+
+      // Validasi khusus
+      if (field.name === "nik" && value && value.length !== 16) {
+        isInvalid = true;
+      }
+      if (field.type === "email" && value) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) isInvalid = true;
+      }
+
+      if (isInvalid) {
         valid = false;
-        field.style.borderColor = '#EF4444';
+        field.style.borderColor = "#EF4444";
         if (!firstInvalid) firstInvalid = field;
       } else {
-        field.style.borderColor = '';
+        field.style.borderColor = "";
       }
     });
-    if (step === 1) {
-      var nik = panel.querySelector('[name="nik"]');
-      if (nik && nik.value && nik.value.length !== 16) {
-        showToast('NIK harus 16 digit', 'error');
-        valid = false;
-        if (!firstInvalid) firstInvalid = nik;
-        nik.style.borderColor = '#EF4444';
-      }
-    }
+
+    // Validasi file di step 3
     if (step === 3) {
-      var fileInput = $('#buktiBayarInput');
-      if (fileInput.files.length > 0) {
-        var fileSize = fileInput.files[0].size / 1024 / 1024;
-        if (fileSize > 2) {
-          showToast('Ukuran file melebiati 2MB!', 'error');
+      var fileInput = $("#buktiBayarInput");
+      if (fileInput && fileInput.files.length > 0) {
+        var fileSizeMB = fileInput.files[0].size / 1024 / 1024;
+        if (fileSizeMB > 2) {
+          showToast("Ukuran file melebihi 2MB!", "error");
           valid = false;
           if (!firstInvalid) firstInvalid = fileInput;
         }
       }
     }
+
     if (!valid && firstInvalid) {
       firstInvalid.focus();
-      if (!$('.toast').classList.contains('show')) showToast('Mohon lengkapi data wajib (*)', 'error');
+      if (!$(".toast").classList.contains("show")) {
+        showToast("Mohon lengkapi data wajib (*)", "error");
+      }
     }
     return valid;
   }
 
   function nextStep(from) {
     if (!validateStep(from)) return;
-    if (from < totalSteps) {
+    if (from < TOTAL_STEPS) {
       goToStep(from + 1);
       if (from + 1 === 3) updateSummary();
     }
@@ -747,152 +772,218 @@
     if (from > 1) goToStep(from - 1);
   }
 
+  // ============ UPDATE HARGA ============
   function updatePrice() {
-    var select = $('#categorySelect');
-    var basePrice = parseInt(select.value) || 0;
-    var label = select.options[select.selectedIndex].text.split(' - ')[0];
+    var select = $("#categorySelect");
+    if (!select) return;
+    var basePrice = parseInt(select.value, 10) || 0;
+    var label = select.options[select.selectedIndex].text.split(" - ")[0];
     var totalPrice = basePrice * ticketQty;
-    var formattedPrice = 'RP ' + totalPrice.toLocaleString('id-ID');
-    $('#summaryCategory').textContent = label + ' (x' + ticketQty + ')';
-    $('#summaryPrice').textContent = 'Rp ' + totalPrice.toLocaleString('id-ID');
-    $('#totalPrice').textContent = formattedPrice;
-    $('#totalQtyText').textContent = ticketQty;
-    var inlinePrice = $('#totalPriceInline');
+    var formattedPrice = "RP " + totalPrice.toLocaleString("id-ID");
+
+    $("#summaryCategory").textContent = label + " (x" + ticketQty + ")";
+    $("#summaryPrice").textContent = "Rp " + totalPrice.toLocaleString("id-ID");
+    $("#totalPrice").textContent = formattedPrice;
+    $("#totalQtyText").textContent = ticketQty;
+
+    var inlinePrice = $("#totalPriceInline");
     if (inlinePrice) inlinePrice.textContent = formattedPrice;
-    $('.qty-btn[data-action="qty-increase"]').disabled = (ticketQty >= MAX_QTY);
-    $('.qty-btn[data-action="qty-decrease"]').disabled = (ticketQty <= MIN_QTY);
+
+    var incBtn = $('.qty-btn[data-action="qty-increase"]');
+    var decBtn = $('.qty-btn[data-action="qty-decrease"]');
+    if (incBtn) incBtn.disabled = (ticketQty >= MAX_QTY);
+    if (decBtn) decBtn.disabled = (ticketQty <= MIN_QTY);
   }
 
   function updateSummary() {
     updatePrice();
     var jersey = $('input[name="ukuran_jersey"]:checked');
-    if (jersey) $('#summaryJersey').textContent = 'Ukuran ' + jersey.value;
+    if (jersey) $("#summaryJersey").textContent = "Ukuran " + jersey.value;
   }
 
   function changeQty(action) {
-    if (action === 'increase' && ticketQty < MAX_QTY) ticketQty++;
-    else if (action === 'decrease' && ticketQty > MIN_QTY) ticketQty--;
-    $('#ticketQty').value = ticketQty;
+    if (action === "increase" && ticketQty < MAX_QTY) ticketQty++;
+    else if (action === "decrease" && ticketQty > MIN_QTY) ticketQty--;
+    $("#ticketQty").value = ticketQty;
     updatePrice();
   }
 
-  function openModal() { $('#sizeChartModal').classList.add('show'); }
-  function closeModal() { $('#sizeChartModal').classList.remove('show'); }
+  // ============ MODAL ============
+  function openModal() { $("#sizeChartModal").classList.add("show"); }
+  function closeModal() { $("#sizeChartModal").classList.remove("show"); }
 
+  // ============ TOAST ============
+  var toastTimer = null;
   function showToast(message, type) {
-    type = type || 'info';
-    var toast = $('#toast');
-    var msgEl = $('#toastMsg');
-    var iconEl = toast.querySelector('i');
+    type = type || "info";
+    var toast = $("#toast");
+    var msgEl = $("#toastMsg");
+    var iconEl = toast.querySelector("i");
     msgEl.textContent = message;
-    var colors = { error: '#EF4444', success: '#10B981', info: '#1A1A1A' };
-    var icons = { error: 'fa-circle-exclamation', success: 'fa-circle-check', info: 'fa-circle-info' };
+
+    var colors = { error: "#EF4444", success: "#10B981", info: "#1A1A1A" };
+    var icons = { error: "fa-circle-exclamation", success: "fa-circle-check", info: "fa-circle-info" };
     toast.style.background = colors[type] || colors.info;
-    iconEl.className = 'fa-solid ' + (icons[type] || icons.info);
-    toast.classList.add('show');
-    clearTimeout(toast._timer);
-    toast._timer = setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    iconEl.className = "fa-solid " + (icons[type] || icons.info);
+
+    toast.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toast.classList.remove("show"); }, 3500);
   }
 
+  // ============ GENERATE REG ID ============
+  function generateRegId() {
+    var random = Math.floor(1000 + Math.random() * 9000);
+    return "IMFR-2026-" + CITY + "-" + random;
+  }
+
+  // ============ SUBMIT KE FORMSPREE ============
   async function submitForm() {
     if (!validateStep(3)) return;
-    var btn = $('#submitBtn');
+
+    var btn = $("#submitBtn");
+    var originalHTML = btn.innerHTML;
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MEMPROSES...';
     btn.disabled = true;
+
     try {
-      var form = $('#regForm');
-      var regId = 'IMFR-2026-' + CITY + '-' + Math.floor(1000 + Math.random() * 9000);
-      var basePrice = parseInt(form.kategori.value) || 0;
-      var categoryLabel = form.kategori.options[form.kategori.selectedIndex].text.split(' - ')[0];
-      var fileInput = $('#buktiBayarInput');
-      var fileName = 'Tidak ada file';
+      var form = $("#regForm");
+      var regId = generateRegId();
+      var basePrice = parseInt(form.kategori.value, 10) || 0;
+      var categoryLabel = form.kategori.options[form.kategori.selectedIndex].text.split(" - ")[0];
+      var jerseySelected = $('input[name="ukuran_jersey"]:checked');
+      var jerseyVal = jerseySelected ? jerseySelected.value : "-";
+      var fileName = "Tidak ada file";
+      var fileInput = $("#buktiBayarInput");
       if (fileInput.files.length > 0) fileName = fileInput.files[0].name;
-      var templateParams = {
-        reg_id: regId,
-        nama: form.nama.value,
-        nik: form.nik.value,
-        tgl_lahir: form.tgl_lahir.value,
-        jenis_kelamin: form.jenis_kelamin.value,
-        wa: '+62 ' + form.wa.value,
-        email: form.email.value,
-        kategori: categoryLabel,
-        jumlah_tiket: ticketQty,
-        harga: 'Rp ' + (basePrice * ticketQty).toLocaleString('id-ID'),
-        ukuran_jersey: form.ukuran_jersey.value,
-        nama_bib: form.nama_bib.value || form.nama.value,
-        alamat: form.alamat.value,
-        kota: form.kota.value,
-        provinsi: form.provinsi.value,
-        kode_pos: form.kode_pos.value || '-',
-        gol_darah: form.gol_darah.value,
-        nama_darurat: form.nama_darurat.value,
-        hubungan_darurat: form.hubungan_darurat.value,
-        hp_darurat: '+62 ' + form.hp_darurat.value,
-        riwayat_penyakit: form.riwayat_penyakit.value || 'Tidak ada',
-        bukti_bayar: fileName,
-        event_lokasi: 'Simpang Lima, Semarang',
-        event_tanggal: '25 Juli 2026',
-        to_email: form.email.value,
-        to_name: form.nama.value
-      };
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-      $('#regId').textContent = regId;
-      $('#regName').textContent = form.nama.value || 'Peserta';
-      $('#regCategory').textContent = categoryLabel + ' (x' + ticketQty + ')';
-      $('#qrImage').src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + regId;
+
+      // Bangun FormData dari form yang ada
+      var formData = new FormData(form);
+
+      // Tambah/override field computed
+      formData.set("reg_id", regId);
+      formData.set("jumlah_tiket", ticketQty);
+      formData.set("total_harga", "Rp " + (basePrice * ticketQty).toLocaleString("id-ID"));
+      formData.set("ukuran_jersey", jerseyVal);
+      formData.set("nama_bib", (form.nama_bib.value || form.nama.value));
+      formData.set("wa", "+62 " + form.wa.value);
+      formData.set("hp_darurat", "+62 " + form.hp_darurat.value);
+      formData.set("kode_pos", form.kode_pos.value || "-");
+      formData.set("riwayat_penyakit", form.riwayat_penyakit.value || "Tidak ada");
+      formData.set("kategori_label", categoryLabel);
+      formData.set("event_lokasi", "Simpang Lima, Semarang");
+      formData.set("event_tanggal", "25 Juli 2026");
+      formData.set("nama_file_bukti", fileName);
+
+      // Kirim ke Formspree
+      var response = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      });
+
+      if (!response.ok) {
+        var errData = null;
+        try { errData = await response.json(); } catch (e) {}
+        var errMsg = (errData && errData.errors && errData.errors[0] && errData.errors[0].message) || "HTTP " + response.status;
+        throw new Error(errMsg);
+      }
+
+      // Sukses - update UI step 4
+      $("#regId").textContent = regId;
+      $("#regName").textContent = form.nama.value || "Peserta";
+      $("#regCategory").textContent = categoryLabel + " (x" + ticketQty + ")";
+      $("#qrImage").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(regId);
+
       goToStep(4);
       launchConfetti();
-      showToast('Pendaftaran berhasil! Email konfirmasi telah dikirim.', 'success');
+      showToast("Pendaftaran berhasil! Data terkirim ke admin.", "success");
     } catch (error) {
-      showToast('Gagal mengirim pendaftaran: ' + (error.text || error.message || 'Unknown error'), 'error');
+      console.error("Submit error:", error);
+      showToast("Gagal mengirim pendaftaran: " + (error.message || "Unknown error"), "error");
     } finally {
-      btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> KONFIRMASI PEMBAYARAN';
+      btn.innerHTML = originalHTML;
       btn.disabled = false;
     }
   }
 
+  // ============ KONFETI ============
   function launchConfetti() {
-    var colors = ['#0055A4', '#F5A623', '#10B981', '#2D7DE2'];
+    var colors = ["#0055A4", "#F5A623", "#10B981", "#2D7DE2"];
     for (var i = 0; i < 50; i++) {
-      var confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.animationDelay = Math.random() * 2 + 's';
-      confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
-      document.body.appendChild(confetti);
-      setTimeout(function(el) { el.remove(); }, 5000, confetti);
+      (function() {
+        var confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + "s";
+        confetti.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+        document.body.appendChild(confetti);
+        setTimeout(function() {
+          if (confetti.parentNode) confetti.parentNode.removeChild(confetti);
+        }, 5000);
+      })();
     }
   }
 
-  document.body.addEventListener('click', function(e) {
-    var target = e.target.closest('[data-action]');
+  // ============ EVENT DELEGATION ============
+  document.body.addEventListener("click", function(e) {
+    var target = e.target.closest("[data-action]");
     if (!target) return;
+
     switch (target.dataset.action) {
-      case 'next': nextStep(parseInt(target.dataset.from)); break;
-      case 'prev': prevStep(parseInt(target.dataset.from)); break;
-      case 'submit': submitForm(); break;
-      case 'open-modal': openModal(); break;
-      case 'close-modal': closeModal(); break;
-      case 'close-modal-bg': if (e.target === target) closeModal(); break;
-      case 'print': window.print(); break;
-      case 'finish': window.location.href = '/'; break;
-      case 'qty-increase': changeQty('increase'); break;
-      case 'qty-decrease': changeQty('decrease'); break;
+      case "next": nextStep(parseInt(target.dataset.from, 10)); break;
+      case "prev": prevStep(parseInt(target.dataset.from, 10)); break;
+      case "submit": submitForm(); break;
+      case "open-modal": openModal(); break;
+      case "close-modal": closeModal(); break;
+      case "close-modal-bg": if (e.target === target) closeModal(); break;
+      case "print": window.print(); break;
+      case "finish":
+        showToast("Terima kasih telah mendaftar!", "success");
+        setTimeout(function() {
+          if (window.history.length > 1) window.history.back();
+          else window.location.href = window.location.pathname;
+        }, 1200);
+        break;
+      case "qty-increase": changeQty("increase"); break;
+      case "qty-decrease": changeQty("decrease"); break;
     }
   });
 
-  document.body.addEventListener('change', function(e) {
+  // ============ EVENT CHANGE (radio & select) ============
+  document.body.addEventListener("change", function(e) {
     if (e.target.matches('input[name="ukuran_jersey"]')) {
-      $$('input[name="ukuran_jersey"]').forEach(function(i) { i.closest('label.radio-card').classList.remove('selected'); });
-      e.target.closest('label.radio-card').classList.add('selected');
+      $$('input[name="ukuran_jersey"]').forEach(function(i) {
+        i.closest("label.radio-card").classList.remove("selected");
+      });
+      e.target.closest("label.radio-card").classList.add("selected");
     }
-    if (e.target.matches('#categorySelect')) updatePrice();
+    if (e.target.matches("#categorySelect")) updatePrice();
   });
 
+  // ============ CEGAH ENTER SUBMIT DEFAULT ============
+  $("#regForm").addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      // Trigger next button jika ada di step aktif
+      var activeNext = $('.step-panel.active [data-action="next"]');
+      if (activeNext) activeNext.click();
+    }
+  });
+
+  // ============ SANITASI INPUT NIK (hanya angka) ============
+  var nikInput = document.querySelector('[name="nik"]');
+  if (nikInput) {
+    nikInput.addEventListener("input", function() {
+      this.value = this.value.replace(/[^0-9]/g, "").slice(0, 16);
+    });
+  }
+
+  // ============ INISIALISASI ============
   setTimeout(function() {
-    var loadingEl = document.getElementById('initialLoading');
-    if (loadingEl) loadingEl.classList.add('hide');
+    var loadingEl = document.getElementById("initialLoading");
+    if (loadingEl) loadingEl.classList.add("hide");
   }, 1500);
 
   animateTicketCount();
