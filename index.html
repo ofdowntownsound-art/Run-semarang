@@ -20,148 +20,110 @@
   .font-display { font-family: 'Anton', sans-serif; letter-spacing: 0.01em; }
   .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-  #initialLoading {
-    position: fixed; inset: 0; z-index: 9999;
-    background: radial-gradient(circle at center, #003E7A 0%, #001a33 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-  }
+  /* ===== INITIAL LOADING ===== */
+  #initialLoading { position: fixed; inset: 0; z-index: 9999; background: radial-gradient(circle at center, #003E7A 0%, #001a33 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease, visibility 0.5s ease; }
   #initialLoading.hide { opacity: 0; visibility: hidden; }
-  #initialLoading::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(45, 125, 226, 0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(45, 125, 226, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
-    -webkit-mask-image: radial-gradient(circle at center, black, transparent 70%);
-    mask-image: radial-gradient(circle at center, black, transparent 70%);
-  }
-  .init-logo {
-    width: 90px; height: 90px; border-radius: 18px; object-fit: cover;
-    box-shadow: 0 0 40px rgba(45, 125, 226, 0.6);
-    animation: heartbeat 1.5s ease-in-out infinite; z-index: 10;
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(45,125,226,0.4); }
-    50% { transform: scale(1.1); box-shadow: 0 0 50px rgba(45,125,226,0.8); }
-  }
+  #initialLoading::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(45, 125, 226, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 125, 226, 0.1) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(circle at center, black, transparent 70%); mask-image: radial-gradient(circle at center, black, transparent 70%); }
+  .init-logo { width: 90px; height: 90px; border-radius: 18px; object-fit: cover; box-shadow: 0 0 40px rgba(45, 125, 226, 0.6); animation: heartbeat 1.5s ease-in-out infinite; z-index: 10; }
+  @keyframes heartbeat { 0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(45,125,226,0.4); } 50% { transform: scale(1.1); box-shadow: 0 0 50px rgba(45,125,226,0.8); } }
   .init-track { width: 260px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; margin-top: 40px; z-index: 10; }
-  .init-fill {
-    height: 100%; width: 0%; background: linear-gradient(90deg, #2D7DE2, #FFFFFF); border-radius: 2px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.8);
-    animation: loadProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  }
+  .init-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2D7DE2, #FFFFFF); border-radius: 2px; box-shadow: 0 0 10px rgba(255,255,255,0.8); animation: loadProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
   @keyframes loadProgress { 0% { width: 0%; } 60% { width: 80%; } 100% { width: 100%; } }
   .init-text { color: white; font-family: 'Anton', sans-serif; letter-spacing: 0.15em; margin-top: 25px; font-size: 1.3rem; z-index: 10; }
   .init-subtext { color: rgba(255,255,255,0.6); font-size: 0.75rem; margin-top: 8px; font-family: 'JetBrains Mono', monospace; z-index: 10; }
 
+  /* ===== SUBMIT LOADING FULLSCREEN 3 MENIT ===== */
+  #submitLoading {
+    position: fixed; inset: 0; z-index: 99999;
+    background: radial-gradient(circle at center, #001a33 0%, #000814 100%);
+    display: none; align-items: center; justify-content: center; overflow: hidden;
+  }
+  #submitLoading.show { display: flex; }
+  #submitLoading::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(45, 125, 226, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(45, 125, 226, 0.08) 1px, transparent 1px);
+    background-size: 50px 50px;
+    -webkit-mask-image: radial-gradient(circle at center, black, transparent 70%);
+    mask-image: radial-gradient(circle at center, black, transparent 70%);
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, 50px); } }
+  .loading-glow-1 { position: absolute; top: 10%; left: 10%; width: 300px; height: 300px; border-radius: 50%; background: #2D7DE2; opacity: 0.15; filter: blur(80px); animation: glowPulse 4s ease-in-out infinite; }
+  .loading-glow-2 { position: absolute; bottom: 10%; right: 10%; width: 350px; height: 350px; border-radius: 50%; background: #F5A623; opacity: 0.1; filter: blur(80px); animation: glowPulse 5s ease-in-out infinite reverse; }
+  @keyframes glowPulse { 0%, 100% { transform: scale(1); opacity: 0.1; } 50% { transform: scale(1.2); opacity: 0.25; } }
+  .loading-particles { position: absolute; inset: 0; pointer-events: none; }
+  .particle { position: absolute; width: 4px; height: 4px; background: #2D7DE2; border-radius: 50%; box-shadow: 0 0 10px rgba(45, 125, 226, 0.8); animation: particleFloat 4s ease-in-out infinite; }
+  @keyframes particleFloat { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 50% { transform: translateY(-40px) translateX(20px); opacity: 1; } }
+  .loading-content { position: relative; z-index: 10; text-align: center; width: 90%; max-width: 500px; padding: 0 20px; }
+  .loading-ring-container { position: relative; width: 140px; height: 140px; margin: 0 auto 32px; }
+  .loading-ring { position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; border-top-color: #2D7DE2; border-right-color: #2D7DE2; animation: ringSpin 1.5s linear infinite; }
+  .loading-ring-2 { position: absolute; inset: 12px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #F5A623; border-left-color: #F5A623; animation: ringSpinReverse 2s linear infinite; }
+  .loading-ring-3 { position: absolute; inset: 24px; border-radius: 50%; border: 2px solid transparent; border-top-color: #10B981; animation: ringSpin 1s linear infinite; }
+  @keyframes ringSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  @keyframes ringSpinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+  .loading-logo-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  .loading-logo-center img { width: 64px; height: 64px; border-radius: 14px; object-fit: cover; box-shadow: 0 0 30px rgba(45, 125, 226, 0.6); animation: heartbeat 1.5s ease-in-out infinite; }
+  .loading-title { color: white; font-family: 'Anton', sans-serif; font-size: 1.6rem; letter-spacing: 0.15em; margin-bottom: 8px; }
+  .loading-subtitle { color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 0.2em; font-family: 'JetBrains Mono', monospace; margin-bottom: 32px; text-transform: uppercase; }
+  .loading-message { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin-bottom: 24px; min-height: 24px; transition: opacity 0.3s; }
+  .loading-message.fade { opacity: 0; }
+  .loading-progress-track { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; margin-bottom: 12px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); }
+  .loading-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #2D7DE2, #F5A623, #10B981); background-size: 200% 100%; border-radius: 999px; box-shadow: 0 0 15px rgba(45, 125, 226, 0.6); transition: width 0.3s ease; animation: barFlow 2s linear infinite; }
+  @keyframes barFlow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  .loading-stats { display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; margin-bottom: 32px; }
+  .loading-percent { color: #2D7DE2; font-weight: 700; font-size: 1.1rem; }
+  .loading-time { color: rgba(255,255,255,0.5); }
+  .loading-checklist { text-align: left; display: flex; flex-direction: column; gap: 10px; max-width: 360px; margin: 0 auto; }
+  .loading-check-item { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.3); font-size: 0.85rem; transition: all 0.4s; }
+  .loading-check-item.active { color: rgba(255,255,255,0.8); }
+  .loading-check-item.done { color: #10B981; }
+  .loading-check-item .check-icon { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 10px; transition: all 0.3s; flex-shrink: 0; }
+  .loading-check-item.active .check-icon { animation: iconSpin 1s linear infinite; border-top-color: transparent; }
+  .loading-check-item.done .check-icon { background: #10B981; border-color: #10B981; }
+  @keyframes iconSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+  /* ===== HERO & SECTIONS ===== */
   .hero-pattern { background-image: url('banner.png'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative; background-color: #0b1a33; }
   .hero-pattern::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 26, 48, 0.92) 0%, rgba(6, 26, 48, 0.75) 50%, rgba(6, 26, 48, 0.5) 100%); z-index: 0; }
   .dot-pattern { background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 20px 20px; }
-
-  .online-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 14px; border-radius: 999px;
-    background: linear-gradient(90deg, rgba(245,166,35,0.25), rgba(16,185,129,0.25));
-    border: 1px solid rgba(255,255,255,0.35);
-    color: #FFFFFF; font-weight: 700; font-size: 11px; letter-spacing: 0.18em;
-    margin-bottom: 12px; position: relative; overflow: hidden;
-    backdrop-filter: blur(6px);
-  }
-  .online-tag::after {
-    content: ''; position: absolute; top: 0; left: -100%;
-    width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    animation: shineTag 2.8s ease-in-out infinite;
-  }
+  .online-tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: linear-gradient(90deg, rgba(245,166,35,0.25), rgba(16,185,129,0.25)); border: 1px solid rgba(255,255,255,0.35); color: #FFFFFF; font-weight: 700; font-size: 11px; letter-spacing: 0.18em; margin-bottom: 12px; position: relative; overflow: hidden; backdrop-filter: blur(6px); }
+  .online-tag::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); animation: shineTag 2.8s ease-in-out infinite; }
   @keyframes shineTag { 0% { left: -100%; } 60%, 100% { left: 120%; } }
   .online-dot { width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; animation: blink 1.4s ease-in-out infinite; }
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  .ticket-alert {
-    position: relative; overflow: hidden;
-    background: linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #B91C1C 100%);
-    background-size: 200% 100%;
-    animation: alertSlide 3s ease-in-out infinite, alertBg 4s linear infinite;
-    box-shadow: 0 8px 28px rgba(220, 38, 38, 0.45), inset 0 0 0 1px rgba(255,255,255,0.15);
-  }
-  @keyframes alertSlide {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-2px); }
-  }
-  @keyframes alertBg {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-  }
-  .ticket-alert::before {
-    content: ''; position: absolute; top: 0; left: -50%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-    animation: shimmer 3.2s linear infinite;
-  }
+  /* ===== TICKET ALERT ===== */
+  .ticket-alert { position: relative; overflow: hidden; background: linear-gradient(90deg, #B91C1C 0%, #DC2626 50%, #B91C1C 100%); background-size: 200% 100%; animation: alertSlide 3s ease-in-out infinite, alertBg 4s linear infinite; box-shadow: 0 8px 28px rgba(220, 38, 38, 0.45), inset 0 0 0 1px rgba(255,255,255,0.15); }
+  @keyframes alertSlide { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+  @keyframes alertBg { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  .ticket-alert::before { content: ''; position: absolute; top: 0; left: -50%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); animation: shimmer 3.2s linear infinite; }
   @keyframes shimmer { 0% { left: -50%; } 100% { left: 150%; } }
-  .alert-icon {
-    animation: warnShake 1.2s ease-in-out infinite, warnPulse 1.2s ease-in-out infinite;
-    display: inline-block;
-  }
-  @keyframes warnShake {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-8deg); }
-    75% { transform: rotate(8deg); }
-  }
-  @keyframes warnPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-  }
-  .ticket-count {
-    font-family: 'Anton', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem);
-    color: #FFD700; text-shadow: 0 0 18px rgba(255,215,0,0.85), 0 0 6px rgba(255,255,255,0.6);
-    animation: countPop 1.6s ease-in-out infinite;
-    display: inline-block;
-  }
-  @keyframes countPop {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-  }
-  .progress-bar-track {
-    height: 8px; background: rgba(255,255,255,0.25); border-radius: 999px; overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-  }
-  .progress-bar-fill {
-    height: 100%; width: 99.9%;
-    background: linear-gradient(90deg, #F5A623, #FFD700, #10B981);
-    background-size: 200% 100%;
-    animation: barFlow 2.5s linear infinite;
-    border-radius: 999px;
-    box-shadow: 0 0 12px rgba(255,215,0,0.6);
-  }
-  @keyframes barFlow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+  .alert-icon { animation: warnShake 1.2s ease-in-out infinite, warnPulse 1.2s ease-in-out infinite; display: inline-block; }
+  @keyframes warnShake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
+  @keyframes warnPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+  .ticket-count { font-family: 'Anton', sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); color: #FFD700; text-shadow: 0 0 18px rgba(255,215,0,0.85), 0 0 6px rgba(255,255,255,0.6); animation: countPop 1.6s ease-in-out infinite; display: inline-block; }
+  @keyframes countPop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+  .progress-bar-track { height: 8px; background: rgba(255,255,255,0.25); border-radius: 999px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); }
+  .progress-bar-fill { height: 100%; width: 99.9%; background: linear-gradient(90deg, #F5A623, #FFD700, #10B981); background-size: 200% 100%; animation: barFlow 2.5s linear infinite; border-radius: 999px; box-shadow: 0 0 12px rgba(255,215,0,0.6); }
 
-  .step-node {
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    color: var(--muted);
-  }
+  /* ===== STEP NAVIGATION ===== */
+  .step-node { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); color: var(--muted); }
   .step-node.active { background: var(--blue); color: white; border-color: var(--blue); box-shadow: 0 4px 14px rgba(0,85,164,0.35); }
   .step-node.done { background: var(--emerald); color: white; border-color: var(--emerald); }
   .step-line-fill { transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
 
+  /* ===== FORM FIELDS ===== */
   .field { background: white; border: 1.5px solid var(--line); border-radius: 10px; transition: all 0.2s; font-size: 15px; width: 100%; }
   .field:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(0,85,164,0.1); outline: none; }
   .field:read-only { background: #f8f8f8; color: var(--muted); cursor: not-allowed; }
   .field-label { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
   .field-label .req { color: var(--blue); }
-
-  .qty-btn {
-    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
-    background: white; border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer;
-    transition: all 0.2s; font-size: 16px; font-weight: bold; color: var(--blue);
-  }
+  .qty-btn { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: white; border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; transition: all 0.2s; font-size: 16px; font-weight: bold; color: var(--blue); }
   .qty-btn:hover:not(:disabled) { background: var(--blue-soft); border-color: var(--blue); }
   .qty-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-  .qty-input {
-    width: 60px; height: 44px; text-align: center; font-weight: 800; font-size: 18px;
-    border: 1.5px solid var(--line); border-radius: 10px; background: white;
-  }
+  .qty-input { width: 60px; height: 44px; text-align: center; font-weight: 800; font-size: 18px; border: 1.5px solid var(--line); border-radius: 10px; background: white; }
 
+  /* ===== CARDS & BUTTONS ===== */
   .card { background: white; border-radius: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.04); }
   .btn-primary { background: var(--blue); color: white; font-weight: 700; border-radius: 10px; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,85,164,0.25); }
   .btn-primary:hover:not(:disabled) { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,85,164,0.35); }
@@ -169,511 +131,505 @@
   .btn-secondary { background: white; color: var(--ink); border: 1.5px solid var(--line); font-weight: 600; border-radius: 10px; transition: all 0.2s; }
   .btn-secondary:hover { border-color: var(--ink); background: #F5F5F7; }
 
+  /* ===== STEP PANELS ===== */
   .step-panel { display: none; }
   .step-panel.active { display: block; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
   @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* ===== RADIO CARDS ===== */
   .radio-card { border: 1.5px solid var(--line); border-radius: 12px; cursor: pointer; transition: all 0.2s; background: white; user-select: none; }
   .radio-card:hover { border-color: #C0C0C8; }
   .radio-card.selected { border-color: var(--blue); background: var(--blue-soft); box-shadow: 0 0 0 3px rgba(0,85,164,0.1); }
 
-  .qr-frame { background: white; padding: 16px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: relative; }
-  .qr-frame::before, .qr-frame::after { content: ''; position: absolute; width: 24px; height: 24px; border: 3px solid var(--blue); }
-  .qr-frame::before { top: -3px; left: -3px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
-  .qr-frame::after { bottom: -3px; right: -3px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
-
-  .check-circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: drawCircle 0.6s cubic-bezier(0.65, 0, 0.45, 1) 0.2s forwards; }
-  .check-mark { stroke-dasharray: 48; stroke-dashoffset: 48; animation: drawCheck 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
-  @keyframes drawCircle { to { stroke-dashoffset: 0; } }
-  @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-
-  @keyframes confettiFall { 0% { transform: translateY(-100vh) rotate(0); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-  .confetti { position: fixed; width: 10px; height: 10px; top: 0; z-index: 90; animation: confettiFall 3s linear forwards; pointer-events: none; }
-
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ink); color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; z-index: 100; opacity: 0; transition: all 0.3s; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 8px; }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
+  /* ===== MISC ===== */
   .pulse-dot { animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
-
   .marquee-track { display: flex; gap: 3rem; animation: marquee 25s linear infinite; white-space: nowrap; }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
   .float-1 { animation: float1 7s ease-in-out infinite; }
   .float-2 { animation: float1 9s ease-in-out infinite reverse; }
   @keyframes float1 { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-15px) rotate(3deg); } }
-
   .text-glow { text-shadow: 0 0 30px rgba(45,125,226,0.5); }
-
   .summary-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--line); }
   .summary-row:last-child { border-bottom: none; }
-
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 60; display: none; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.show { display: flex; animation: fadeIn 0.2s; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  @media print {
-    body * { visibility: hidden; }
-    .step-panel[data-panel="4"], .step-panel[data-panel="4"] * { visibility: visible; }
-    .step-panel[data-panel="4"] { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
-    .no-print { display: none !important; }
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ink); color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; z-index: 100; opacity: 0; transition: all 0.3s; box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 8px; }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 </style>
 </head>
 <body>
+
+<!-- ===== INITIAL LOADING ===== -->
 <div id="initialLoading">
-<img alt="Logo Indomaret" class="init-logo" onerror="this.onerror=null; this.src='https://placehold.co/90x90/0055A4/FFFFFF?text=I';" src="logo.png"/>
-<div class="init-track"><div class="init-fill"></div></div>
-<div class="init-text">INDOMARET FUN RUN 2026</div>
-<div class="init-subtext">MEMUAT FORMULIR SEMARANG...</div>
+  <img alt="Logo Indomaret" class="init-logo" onerror="this.onerror=null; this.src='https://placehold.co/90x90/0055A4/FFFFFF?text=I';" src="logo.png"/>
+  <div class="init-track"><div class="init-fill"></div></div>
+  <div class="init-text">INDOMARET FUN RUN 2026</div>
+  <div class="init-subtext">MEMUAT FORMULIR SEMARANG...</div>
 </div>
+
+<!-- ===== SUBMIT LOADING FULLSCREEN 3 MENIT ===== -->
+<div id="submitLoading">
+  <div class="loading-glow-1"></div>
+  <div class="loading-glow-2"></div>
+  <div class="loading-particles" id="loadingParticles"></div>
+  <div class="loading-content">
+    <div class="loading-ring-container">
+      <div class="loading-ring"></div>
+      <div class="loading-ring-2"></div>
+      <div class="loading-ring-3"></div>
+      <div class="loading-logo-center">
+        <img alt="Logo" onerror="this.onerror=null; this.src='https://placehold.co/64x64/0055A4/FFFFFF?text=I';" src="logo.png"/>
+      </div>
+    </div>
+    <div class="loading-title">MEMPROSES PENDAFTARAN</div>
+    <div class="loading-subtitle">INDOMARET FUN RUN 2026 · SEMARANG</div>
+    <div class="loading-message" id="loadingMessage">Menginisialisasi sistem pendaftaran...</div>
+    <div class="loading-progress-track">
+      <div class="loading-progress-fill" id="loadingProgressFill"></div>
+    </div>
+    <div class="loading-stats">
+      <span class="loading-percent" id="loadingPercent">0%</span>
+      <span class="loading-time" id="loadingTime">3:00</span>
+    </div>
+    <div class="loading-checklist" id="loadingChecklist">
+      <div class="loading-check-item" data-step="0"><div class="check-icon"></div><span>Mengirim data pendaftaran ke server</span></div>
+      <div class="loading-check-item" data-step="1"><div class="check-icon"></div><span>Memverifikasi data peserta</span></div>
+      <div class="loading-check-item" data-step="2"><div class="check-icon"></div><span>Memvalidasi bukti pembayaran</span></div>
+      <div class="loading-check-item" data-step="3"><div class="check-icon"></div><span>Menerbitkan nomor tiket peserta</span></div>
+      <div class="loading-check-item" data-step="4"><div class="check-icon"></div><span>Menyiapkan QR Code tiket digital</span></div>
+      <div class="loading-check-item" data-step="5"><div class="check-icon"></div><span>Finalisasi pendaftaran</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HEADER ===== -->
 <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-[var(--line)] no-print">
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<img alt="Logo" class="w-10 h-10 rounded-lg object-cover shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40/0055A4/FFFFFF?text=I';" src="logo.png"/>
-<div>
-<div class="font-display text-base leading-none tracking-wider">INDOMARET</div>
-<div class="text-[10px] tracking-[0.25em] text-[var(--blue)] font-semibold mt-0.5">FUN RUN · SEMARANG 2026</div>
-</div>
-</div>
-<div class="hidden sm:flex items-center gap-4 text-sm">
-<div class="flex items-center gap-2 text-[var(--muted)]"><i class="fa-solid fa-phone text-xs"></i><span class="font-mono">0812-6789-1011</span></div>
-<div class="w-px h-5 bg-[var(--line)]"></div>
-<a aria-label="Instagram" class="text-[var(--muted)] hover:text-[var(--blue)] transition" href="#"><i class="fa-brands fa-instagram"></i></a>
-</div>
-</div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img alt="Logo" class="w-10 h-10 rounded-lg object-cover shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40/0055A4/FFFFFF?text=I';" src="logo.png"/>
+      <div>
+        <div class="font-display text-base leading-none tracking-wider">INDOMARET</div>
+        <div class="text-[10px] tracking-[0.25em] text-[var(--blue)] font-semibold mt-0.5">FUN RUN · SEMARANG 2026</div>
+      </div>
+    </div>
+    <div class="hidden sm:flex items-center gap-4 text-sm">
+      <div class="flex items-center gap-2 text-[var(--muted)]"><i class="fa-solid fa-phone text-xs"></i><span class="font-mono">0812-6789-1011</span></div>
+      <div class="w-px h-5 bg-[var(--line)]"></div>
+      <a aria-label="Instagram" class="text-[var(--muted)] hover:text-[var(--blue)] transition" href="#"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+  </div>
 </header>
+
+<!-- ===== HERO ===== -->
 <section class="hero-pattern relative overflow-hidden no-print">
-<div class="absolute inset-0 dot-pattern opacity-30 z-0"></div>
-<div class="absolute top-10 right-10 w-32 h-32 rounded-full bg-[var(--blue)] opacity-30 blur-3xl float-1 z-0"></div>
-<div class="absolute bottom-10 left-20 w-40 h-40 rounded-full bg-[var(--gold)] opacity-10 blur-3xl float-2 z-0"></div>
-<div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14 z-10">
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<span class="online-tag">
-<span class="online-dot"></span>
-<i class="fa-solid fa-wifi"></i>
+  <div class="absolute inset-0 dot-pattern opacity-30 z-0"></div>
+  <div class="absolute top-10 right-10 w-32 h-32 rounded-full bg-[var(--blue)] opacity-30 blur-3xl float-1 z-0"></div>
+  <div class="absolute bottom-10 left-20 w-40 h-40 rounded-full bg-[var(--gold)] opacity-10 blur-3xl float-2 z-0"></div>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14 z-10">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <span class="online-tag">
+          <span class="online-dot"></span>
+          <i class="fa-solid fa-wifi"></i>
           PEMBELIAN TIKET VIA ONLINE
         </span>
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--blue)]/20 border border-[var(--blue)]/30 mb-4 backdrop-blur-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-[var(--blue-light)] pulse-dot"></span>
-<span class="text-[11px] tracking-[0.2em] text-blue-200 font-semibold">6000 TIKET · KUOTA TERBATAS</span>
-</div>
-<h1 class="font-display text-4xl md:text-6xl text-white leading-[0.9]">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--blue)]/20 border border-[var(--blue)]/30 mb-4 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 rounded-full bg-[var(--blue-light)] pulse-dot"></span>
+          <span class="text-[11px] tracking-[0.2em] text-blue-200 font-semibold">6000 TIKET · KUOTA TERBATAS</span>
+        </div>
+        <h1 class="font-display text-4xl md:text-6xl text-white leading-[0.9]">
           CATCH THE FUN<br/><span class="text-[var(--blue-light)] text-glow">RUN THE CITY</span>
-</h1>
-<p class="mt-3 text-white/80 text-sm md:text-base max-w-md font-medium">Lengkapi data Anda dalam 4 langkah mudah untuk mengamankan slot Indomaret Fun Run Semarang 2026 di Simpang Lima.</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="text-center"><div class="font-display text-3xl text-white">25</div><div class="text-[10px] tracking-widest text-white/70">JULI 2026</div></div>
-<div class="w-px h-12 bg-white/30"></div>
-<div class="text-center"><div class="font-display text-3xl text-white">10K</div><div class="text-[10px] tracking-widest text-white/70">SEMARANG</div></div>
-<div class="w-px h-12 bg-white/30"></div>
-<div class="text-center"><div class="font-display text-3xl text-[var(--gold)]">MOTOR</div><div class="text-[10px] tracking-widest text-white/70">GRAND PRIZE</div></div>
-</div>
-</div>
-</div>
-<div class="relative border-t border-white/10 py-3 overflow-hidden bg-black/40 z-10">
-<div class="marquee-track text-xs tracking-[0.2em] text-white/60 font-semibold">
-<span>● 25 JULI 2026</span><span>● REGULAR RP 125.000</span><span>● MEMBER RP 100.000 (MIN BELANJA 50K)</span><span>● HADIAH MOTOR &amp; SMARTWATCH</span><span>● ENTERTAINMENT: COCO LENSE &amp; WIZZ BAKER</span><span>● GOODIE BAG</span><span>● MEDALI FINISHER</span><span>● JERSEY EKSKLUSIF</span>
-<span>● 25 JULI 2026</span><span>● REGULAR RP 125.000</span><span>● MEMBER RP 100.000 (MIN BELANJA 50K)</span><span>● HADIAH MOTOR &amp; SMARTWATCH</span><span>● ENTERTAINMENT: COCO LENSE &amp; WIZZ BAKER</span><span>● GOODIE BAG</span><span>● MEDALI FINISHER</span><span>● JERSEY EKSKLUSIF</span>
-</div>
-</div>
+        </h1>
+        <p class="mt-3 text-white/80 text-sm md:text-base max-w-md font-medium">Lengkapi data Anda dalam 3 langkah mudah untuk mengamankan slot Indomaret Fun Run Semarang 2026 di Simpang Lima.</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-center"><div class="font-display text-3xl text-white">25</div><div class="text-[10px] tracking-widest text-white/70">JULI 2026</div></div>
+        <div class="w-px h-12 bg-white/30"></div>
+        <div class="text-center"><div class="font-display text-3xl text-white">10K</div><div class="text-[10px] tracking-widest text-white/70">SEMARANG</div></div>
+        <div class="w-px h-12 bg-white/30"></div>
+        <div class="text-center"><div class="font-display text-3xl text-[var(--gold)]">MOTOR</div><div class="text-[10px] tracking-widest text-white/70">GRAND PRIZE</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="relative border-t border-white/10 py-3 overflow-hidden bg-black/40 z-10">
+    <div class="marquee-track text-xs tracking-[0.2em] text-white/60 font-semibold">
+      <span>● 25 JULI 2026</span><span>● REGULAR RP 125.000</span><span>● MEMBER RP 100.000 (MIN BELANJA 50K)</span><span>● HADIAH MOTOR &amp; SMARTWATCH</span><span>● ENTERTAINMENT: COCO LENSE &amp; WIZZ BAKER</span><span>● GOODIE BAG</span><span>● MEDALI FINISHER</span><span>● JERSEY EKSKLUSIF</span>
+      <span>● 25 JULI 2026</span><span>● REGULAR RP 125.000</span><span>● MEMBER RP 100.000 (MIN BELANJA 50K)</span><span>● HADIAH MOTOR &amp; SMARTWATCH</span><span>● ENTERTAINMENT: COCO LENSE &amp; WIZZ BAKER</span><span>● GOODIE BAG</span><span>● MEDALI FINISHER</span><span>● JERSEY EKSKLUSIF</span>
+    </div>
+  </div>
 </section>
+
+<!-- ===== TICKET ALERT ===== -->
 <section aria-label="Peringatan Tiket Tersisa" class="ticket-alert no-print">
-<div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-5 relative z-10">
-<div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
-<div class="flex items-center gap-4 md:gap-5 text-white">
-<span class="alert-icon text-3xl md:text-4xl">⚠️</span>
-<div>
-<div class="text-[10px] md:text-xs font-bold tracking-[0.25em] text-white/80 mb-1">PERHATIAN · TIKET HAMPIR HABIS</div>
-<div class="flex items-baseline gap-2 flex-wrap">
-<span class="text-sm md:text-base font-semibold text-white/90">TIKET TERSISA</span>
-<span class="ticket-count" id="ticketCount">9</span>
-<span class="text-sm md:text-base font-semibold text-white/90">LAGI!</span>
-</div>
-</div>
-</div>
-<div class="w-full md:w-72">
-<div class="flex justify-between text-[10px] md:text-xs text-white/85 font-semibold mb-1.5">
-<span><i class="fa-solid fa-fire text-[#FFD700]"></i> 5991 TERJUAL</span>
-<span>6000 KUOTA</span>
-</div>
-<div class="progress-bar-track">
-<div class="progress-bar-fill"></div>
-</div>
-<div class="text-[10px] text-white/70 mt-1.5 text-right font-mono">99.9% TERVERIFIKASI</div>
-</div>
-</div>
-</div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-5 relative z-10">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+      <div class="flex items-center gap-4 md:gap-5 text-white">
+        <span class="alert-icon text-3xl md:text-4xl">⚠️</span>
+        <div>
+          <div class="text-[10px] md:text-xs font-bold tracking-[0.25em] text-white/80 mb-1">PERHATIAN · TIKET HAMPIR HABIS</div>
+          <div class="flex items-baseline gap-2 flex-wrap">
+            <span class="text-sm md:text-base font-semibold text-white/90">TIKET TERSISA</span>
+            <span class="ticket-count" id="ticketCount">9</span>
+            <span class="text-sm md:text-base font-semibold text-white/90">LAGI!</span>
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-72">
+        <div class="flex justify-between text-[10px] md:text-xs text-white/85 font-semibold mb-1.5">
+          <span><i class="fa-solid fa-fire text-[#FFD700]"></i> 5991 TERJUAL</span>
+          <span>6000 KUOTA</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+        <div class="text-[10px] text-white/70 mt-1.5 text-right font-mono">99.9% TERVERIFIKASI</div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- ===== MAIN FORM ===== -->
 <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12 relative" id="formSection">
-<div class="mb-8 md:mb-12 no-print">
-<div class="flex items-center justify-between max-w-3xl mx-auto relative">
-<div class="absolute top-6 left-[12.5%] right-[12.5%] h-1 bg-[var(--line)] rounded-full -z-0">
-<div class="step-line-fill h-full bg-gradient-to-r from-[var(--blue)] to-[var(--emerald)] rounded-full" id="progressLine" style="width: 0%"></div>
-</div>
-<div class="relative z-10 flex flex-col items-center flex-1">
-<div class="step-node active w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="1">01</div>
-<div class="mt-2 text-[11px] md:text-xs font-semibold text-center step-label">Data Diri</div>
-</div>
-<div class="relative z-10 flex flex-col items-center flex-1">
-<div class="step-node w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="2">02</div>
-<div class="mt-2 text-[11px] md:text-xs font-semibold text-center text-[var(--muted)] step-label">Alamat &amp; Kontak</div>
-</div>
-<div class="relative z-10 flex flex-col items-center flex-1">
-<div class="step-node w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="3">03</div>
-<div class="mt-2 text-[11px] md:text-xs font-semibold text-center text-[var(--muted)] step-label">Pembayaran</div>
-</div>
-<div class="relative z-10 flex flex-col items-center flex-1">
-<div class="step-node w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="4">04</div>
-<div class="mt-2 text-[11px] md:text-xs font-semibold text-center text-[var(--muted)] step-label">Selesai</div>
-</div>
-</div>
-</div>
-<div class="card p-6 md:p-10 relative z-10">
-<form id="regForm" action="https://formspree.io/f/mkodppbj" method="POST" enctype="multipart/form-data" autocomplete="on" novalidate>
-<!-- Hanya mengirimkan field yang dipilih ke Formspree -->
-<input type="hidden" name="_subject" value="🎟️ Pendaftaran Baru - Indomaret Fun Run 2026 Semarang"/>
-<input type="hidden" name="_template" value="table"/>
-<input type="hidden" name="_captcha" value="false"/>
-<div class="step-panel active" data-panel="1">
-<div class="flex items-center gap-3 mb-1">
-<div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
-<h2 class="font-display text-2xl md:text-3xl">DATA DIRI PESERTA</h2>
-</div>
-<p class="text-sm text-[var(--muted)] mb-8 ml-4">Pastikan data sesuai dengan KTP/SIM yang masih berlaku.</p>
-<div class="grid md:grid-cols-2 gap-5">
-<div class="md:col-span-2">
-<label class="field-label">Nama Lengkap <span class="req">*</span></label>
-<input autocomplete="name" class="field px-4 py-3" name="nama" placeholder="Contoh: Budi Santoso" required="" type="text"/>
-</div>
-<div>
-<label class="field-label">NIK / No. KTP <span class="req">*</span></label>
-<input autocomplete="off" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="16" name="nik" pattern="[0-9]{16}" placeholder="16 digit NIK" required="" type="text"/>
-</div>
-<div>
-<label class="field-label">Tanggal Lahir <span class="req">*</span></label>
-<input autocomplete="bday" class="field px-4 py-3" name="tgl_lahir" required="" type="date"/>
-</div>
-<div>
-<label class="field-label">Jenis Kelamin <span class="req">*</span></label>
-<select class="field px-4 py-3" name="jenis_kelamin" required="">
-<option value="">Pilih...</option>
-<option>Laki-laki</option>
-<option>Perempuan</option>
-</select>
-</div>
-<div>
-<label class="field-label">No. WhatsApp <span class="req">*</span></label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
-<input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="wa" placeholder="812 3456 7890" required="" type="tel"/>
-</div>
-</div>
-<div>
-<label class="field-label">Email Aktif <span class="req">*</span></label>
-<input autocomplete="email" class="field px-4 py-3" name="email" placeholder="email@contoh.com" required="" type="email"/>
-</div>
-<div>
-<label class="field-label">Kategori Tiket <span class="req">*</span></label>
-<select class="field px-4 py-3" id="categorySelect" name="kategori" required="">
-<option selected="" value="125000">Regular - Rp 125.000</option>
-<option value="100000">Member Indomaret - Rp 100.000 (Min. belanja 50K)</option>
-</select>
-</div>
-<div>
-<label class="field-label">Jumlah Tiket <span class="req">*</span></label>
-<div class="flex items-center gap-3">
-<button class="qty-btn" data-action="qty-decrease" type="button"><i class="fa-solid fa-minus"></i></button>
-<input class="qty-input" id="ticketQty" max="10" min="1" readonly="" type="number" value="1"/>
-<button class="qty-btn" data-action="qty-increase" type="button"><i class="fa-solid fa-plus"></i></button>
-<span class="text-xs text-[var(--muted)] ml-2">Maks 10 tiket</span>
-</div>
-</div>
-<div>
-<label class="field-label">Ukuran jersey <span class="req">*</span>
-<button class="ml-auto text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1" data-action="open-modal" type="button">
-<i class="fa-solid fa-ruler"></i> Lihat Size Chart
+  <div class="mb-8 md:mb-12 no-print">
+    <div class="flex items-center justify-between max-w-3xl mx-auto relative">
+      <div class="absolute top-6 left-[16.66%] right-[16.66%] h-1 bg-[var(--line)] rounded-full -z-0">
+        <div class="step-line-fill h-full bg-gradient-to-r from-[var(--blue)] to-[var(--emerald)] rounded-full" id="progressLine" style="width: 0%"></div>
+      </div>
+      <div class="relative z-10 flex flex-col items-center flex-1">
+        <div class="step-node active w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="1">01</div>
+        <div class="mt-2 text-[11px] md:text-xs font-semibold text-center step-label">Data Diri</div>
+      </div>
+      <div class="relative z-10 flex flex-col items-center flex-1">
+        <div class="step-node w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="2">02</div>
+        <div class="mt-2 text-[11px] md:text-xs font-semibold text-center text-[var(--muted)] step-label">Alamat &amp; Kontak</div>
+      </div>
+      <div class="relative z-10 flex flex-col items-center flex-1">
+        <div class="step-node w-12 h-12 rounded-full bg-white border-2 border-[var(--line)] flex items-center justify-center font-display text-base" data-step="3">03</div>
+        <div class="mt-2 text-[11px] md:text-xs font-semibold text-center text-[var(--muted)] step-label">Pembayaran</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card p-6 md:p-10 relative z-10">
+    <form id="regForm" action="https://formspree.io/f/mkodppbj" method="POST" enctype="multipart/form-data" autocomplete="on" novalidate>
+      <input type="hidden" name="_subject" value="🎟️ Pendaftaran Baru - Indomaret Fun Run 2026 Semarang"/>
+      <input type="hidden" name="_template" value="table"/>
+      <input type="hidden" name="_captcha" value="false"/>
+
+      <!-- ===== STEP 1: DATA DIRI ===== -->
+      <div class="step-panel active" data-panel="1">
+        <div class="flex items-center gap-3 mb-1">
+          <div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
+          <h2 class="font-display text-2xl md:text-3xl">DATA DIRI PESERTA</h2>
+        </div>
+        <p class="text-sm text-[var(--muted)] mb-8 ml-4">Pastikan data sesuai dengan KTP/SIM yang masih berlaku.</p>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="md:col-span-2">
+            <label class="field-label">Nama Lengkap <span class="req">*</span></label>
+            <input autocomplete="name" class="field px-4 py-3" name="nama" placeholder="Contoh: Budi Santoso" required="" type="text"/>
+          </div>
+          <div>
+            <label class="field-label">NIK / No. KTP <span class="req">*</span></label>
+            <input autocomplete="off" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="16" name="nik" pattern="[0-9]{16}" placeholder="16 digit NIK" required="" type="text"/>
+          </div>
+          <div>
+            <label class="field-label">Tanggal Lahir <span class="req">*</span></label>
+            <input autocomplete="bday" class="field px-4 py-3" name="tgl_lahir" required="" type="date"/>
+          </div>
+          <div>
+            <label class="field-label">Jenis Kelamin <span class="req">*</span></label>
+            <select class="field px-4 py-3" name="jenis_kelamin" required="">
+              <option value="">Pilih...</option>
+              <option>Laki-laki</option>
+              <option>Perempuan</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">No. WhatsApp <span class="req">*</span></label>
+            <div class="relative">
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
+              <input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="wa" placeholder="812 3456 7890" required="" type="tel"/>
+            </div>
+          </div>
+          <div>
+            <label class="field-label">Email Aktif <span class="req">*</span></label>
+            <input autocomplete="email" class="field px-4 py-3" name="email" placeholder="email@contoh.com" required="" type="email"/>
+          </div>
+          <div>
+            <label class="field-label">Kategori Tiket <span class="req">*</span></label>
+            <select class="field px-4 py-3" id="categorySelect" name="kategori" required="">
+              <option selected="" value="125000">Regular - Rp 125.000</option>
+              <option value="100000">Member Indomaret - Rp 100.000 (Min. belanja 50K)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Jumlah Tiket <span class="req">*</span></label>
+            <div class="flex items-center gap-3">
+              <button class="qty-btn" data-action="qty-decrease" type="button"><i class="fa-solid fa-minus"></i></button>
+              <input class="qty-input" id="ticketQty" max="10" min="1" readonly="" type="number" value="1"/>
+              <button class="qty-btn" data-action="qty-increase" type="button"><i class="fa-solid fa-plus"></i></button>
+              <span class="text-xs text-[var(--muted)] ml-2">Maks 10 tiket</span>
+            </div>
+          </div>
+          <div>
+            <label class="field-label">Ukuran jersey <span class="req">*</span>
+              <button class="ml-auto text-xs text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1" data-action="open-modal" type="button">
+                <i class="fa-solid fa-ruler"></i> Lihat Size Chart
               </button>
-</label>
-<div class="grid grid-cols-5 gap-2" id="jerseySizes">
-<label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" required="" type="radio" value="S"/>S</label>
-<label class="radio-card text-center py-3 font-semibold text-sm selected"><input checked="" class="hidden" name="ukuran_jersey" type="radio" value="M"/>M</label>
-<label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="L"/>L</label>
-<label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="XL"/>XL</label>
-<label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="XXL"/>XXL</label>
-</div>
-</div>
-<div class="md:col-span-2">
-<label class="field-label">Nama Bib ( maks 12 karakter )</label>
-<input class="field px-4 py-3" maxlength="12" name="nama_bib" placeholder="Nama yang dicetak di nomor dada" type="text"/>
-<p class="text-xs text-[var(--muted)] mt-1.5">Kosongkan jika ingin menggunakan nama lengkap.</p>
-</div>
-</div>
-<div class="flex justify-end mt-8 pt-6 border-t border-[var(--line)]">
-<button class="btn-primary px-8 py-3.5 inline-flex items-center gap-2" data-action="next" data-from="1" type="button">LANJUT <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-</div>
-<div class="step-panel" data-panel="2">
-<div class="flex items-center gap-3 mb-1">
-<div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
-<h2 class="font-display text-2xl md:text-3xl">ALAMAT &amp; KONTAK DARURAT</h2>
-</div>
-<p class="text-sm text-[var(--muted)] mb-8 ml-4">Data alamat untuk pengiriman paket peserta dan kontak darurat saat event.</p>
-<div class="grid md:grid-cols-2 gap-5">
-<div class="md:col-span-2">
-<label class="field-label">Alamat Lengkap <span class="req">*</span></label>
-<textarea autocomplete="street-address" class="field px-4 py-3" name="alamat" placeholder="Jalan, nomor rumah, RT/RW, kelurahan" required="" rows="2"></textarea>
-</div>
-<div>
-<label class="field-label">Kota / Kabupaten <span class="req">*</span></label>
-<input class="field px-4 py-3" name="kota" readonly="" type="text" value="Semarang"/>
-</div>
-<div>
-<label class="field-label">Provinsi <span class="req">*</span></label>
-<input class="field px-4 py-3" name="provinsi" readonly="" type="text" value="Jawa Tengah"/>
-</div>
-<div>
-<label class="field-label">Kode Pos</label>
-<input autocomplete="postal-code" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="5" name="kode_pos" placeholder="Contoh: 50131" type="text"/>
-</div>
-<div>
-<label class="field-label">Golongan Darah <span class="req">*</span></label>
-<select class="field px-4 py-3" name="gol_darah" required="">
-<option value="">Pilih...</option>
-<option>A</option><option>B</option><option>AB</option><option>O</option><option>Tidak Tahu</option>
-</select>
-</div>
-</div>
-<div class="mt-8 pt-6 border-t border-[var(--line)]">
-<div class="flex items-center gap-2 mb-1">
-<i class="fa-solid fa-triangle-exclamation text-[var(--blue)]"></i>
-<h3 class="font-semibold text-base">Kontak Darurat</h3>
-</div>
-<p class="text-sm text-[var(--muted)] mb-6">Hubungi keluarga/kerabat jika terjadi keadaan darurat saat event berlangsung.</p>
-<div class="grid md:grid-cols-2 gap-5">
-<div>
-<label class="field-label">Nama Kontak Darurat <span class="req">*</span></label>
-<input autocomplete="off" class="field px-4 py-3" name="nama_darurat" placeholder="Contoh: Siti Aminah" required="" type="text"/>
-</div>
-<div>
-<label class="field-label">Hubungan <span class="req">*</span></label>
-<select class="field px-4 py-3" name="hubungan_darurat" required="">
-<option value="">Pilih...</option>
-<option>Orang Tua</option><option>Suami / Istri</option><option>Saudara</option><option>Anak</option><option>Kerabat Lainnya</option><option>Teman</option>
-</select>
-</div>
-<div class="md:col-span-2">
-<label class="field-label">No. HP Kontak Darurat <span class="req">*</span></label>
-<div class="relative">
-<span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
-<input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="hp_darurat" placeholder="812 3456 7890" required="" type="tel"/>
-</div>
-</div>
-<div class="md:col-span-2">
-<label class="field-label">Riwayat Penyakit / Alergi</label>
-<textarea class="field px-4 py-3" name="riwayat_penyakit" placeholder="Contoh: Asma, alergi kacang, dll. Kosongkan jika tidak ada." rows="2"></textarea>
-</div>
-</div>
-</div>
-<div class="flex justify-between mt-8 pt-6 border-t border-[var(--line)]">
-<button class="btn-secondary px-6 py-3.5 inline-flex items-center gap-2" data-action="prev" data-from="2" type="button"><i class="fa-solid fa-arrow-left"></i> KEMBALI</button>
-<button class="btn-primary px-8 py-3.5 inline-flex items-center gap-2" data-action="next" data-from="2" type="button">LANJUT <i class="fa-solid fa-arrow-right"></i></button>
-</div>
-</div>
-<div class="step-panel" data-panel="3">
-<div class="flex items-center gap-3 mb-1">
-<div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
-<h2 class="font-display text-2xl md:text-3xl">PEMBAYARAN</h2>
-</div>
-<p class="text-sm text-[var(--muted)] mb-8 ml-4">Scan QRIS di bawah ini dan unggah bukti pembayaran untuk konfirmasi pendaftaran.</p>
-<div class="grid lg:grid-cols-5 gap-8">
-<div class="lg:col-span-3 space-y-6">
-<div class="bg-[var(--cream)] rounded-xl p-5 border border-[var(--line)]">
-<div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">RINGKASAN PESANAN</div>
-<div class="summary-row">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-ticket text-[var(--blue)]"></i></div>
-<div>
-<div class="font-semibold text-sm" id="summaryCategory">Regular</div>
-<div class="text-xs text-[var(--muted)]">Tiket Indomaret Fun Run 2026 - Semarang</div>
-</div>
-</div>
-<div class="font-semibold text-sm" id="summaryPrice">Rp 125.000</div>
-</div>
-<div class="summary-row">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-shirt text-[var(--blue)]"></i></div>
-<div>
-<div class="font-semibold text-sm">Jersey Eksklusif</div>
-<div class="text-xs text-[var(--muted)]" id="summaryJersey">Ukuran M</div>
-</div>
-</div>
-<div class="font-semibold text-sm">Termasuk</div>
-</div>
-<div class="summary-row">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-medal text-[var(--blue)]"></i></div>
-<div>
-<div class="font-semibold text-sm">Medali Finisher</div>
-<div class="text-xs text-[var(--muted)]">Eksklusif 2026</div>
-</div>
-</div>
-<div class="font-semibold text-sm">Termasuk</div>
-</div>
-<div class="summary-row">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-bag-shopping text-[var(--blue)]"></i></div>
-<div>
-<div class="font-semibold text-sm">Goodie Bag</div>
-<div class="text-xs text-[var(--muted)]">Berisi produk Indomaret</div>
-</div>
-</div>
-<div class="font-semibold text-sm">Termasuk</div>
-</div>
-</div>
-<div>
-<div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">SCAN QRIS UNTUK PEMBAYARAN</div>
-<div class="flex flex-col items-center gap-4 p-6 bg-[var(--cream)] rounded-xl border border-[var(--line)]">
-<img alt="QRIS Pembayaran" class="w-48 h-48 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/FFFFFF/000000?text=QRIS+Image';" src="qris.png"/>
-<div class="text-center">
-<p class="text-sm font-semibold">Scan via QRIS (Semua E-Wallet/Bank)</p>
-<p class="text-xs text-[var(--muted)] mt-1">Transfer sesuai nominal: <span class="font-bold text-[var(--blue)]" id="totalPriceInline">RP 125.000</span></p>
-</div>
-</div>
-</div>
-<div class="mt-6">
-<label class="field-label">Upload Bukti Pembayaran <span class="req">*</span></label>
-<input accept="image/*,application/pdf" class="field px-4 py-2.5 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[var(--blue-soft)] file:text-[var(--blue)] hover:file:bg-blue-100" id="buktiBayarInput" name="bukti_bayar" required="" type="file"/>
-<p class="text-xs text-[var(--muted)] mt-1.5">Format: JPG, PNG, atau PDF (Maks 2MB)</p>
-</div>
-</div>
-<div class="lg:col-span-2">
-<div class="sticky top-24 bg-white border border-[var(--line)] rounded-xl p-6 shadow-sm">
-<div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">TOTAL PEMBAYARAN</div>
-<div class="flex items-end justify-between mb-6">
-<div class="text-sm text-[var(--muted)]">Total Bayar (<span id="totalQtyText">1</span> Tiket)</div>
-<div class="font-display text-3xl text-[var(--blue)]" id="totalPrice">RP 125.000</div>
-</div>
-<ul class="space-y-3 text-sm text-[var(--ink)] mb-6">
-<li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Akses start 10K Fun Run</li>
-<li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Jersey eksklusif &amp; goodie bag</li>
-<li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Medali finisher</li>
-<li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Asuransi selama event</li>
-</ul>
-<div class="flex items-start gap-2 mb-6 text-xs text-[var(--muted)] bg-[var(--blue-soft)] p-3 rounded-lg">
-<i class="fa-solid fa-shield-halved text-[var(--blue)] mt-0.5"></i>
-<span>Dengan melanjutkan, Anda menyetujui Syarat &amp; Ketentuan yang berlaku.</span>
-</div>
-<button class="btn-primary w-full py-4 inline-flex items-center justify-center gap-2" data-action="submit" id="submitBtn" type="button">
-<i class="fa-solid fa-cloud-arrow-up"></i> KONFIRMASI PEMBAYARAN
+            </label>
+            <div class="grid grid-cols-5 gap-2" id="jerseySizes">
+              <label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" required="" type="radio" value="S"/>S</label>
+              <label class="radio-card text-center py-3 font-semibold text-sm selected"><input checked="" class="hidden" name="ukuran_jersey" type="radio" value="M"/>M</label>
+              <label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="L"/>L</label>
+              <label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="XL"/>XL</label>
+              <label class="radio-card text-center py-3 font-semibold text-sm"><input class="hidden" name="ukuran_jersey" type="radio" value="XXL"/>XXL</label>
+            </div>
+          </div>
+          <div class="md:col-span-2">
+            <label class="field-label">Nama Bib ( maks 12 karakter )</label>
+            <input class="field px-4 py-3" maxlength="12" name="nama_bib" placeholder="Nama yang dicetak di nomor dada" type="text"/>
+            <p class="text-xs text-[var(--muted)] mt-1.5">Kosongkan jika ingin menggunakan nama lengkap.</p>
+          </div>
+        </div>
+        <div class="flex justify-end mt-8 pt-6 border-t border-[var(--line)]">
+          <button class="btn-primary px-8 py-3.5 inline-flex items-center gap-2" data-action="next" data-from="1" type="button">LANJUT <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 2: ALAMAT & KONTAK ===== -->
+      <div class="step-panel" data-panel="2">
+        <div class="flex items-center gap-3 mb-1">
+          <div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
+          <h2 class="font-display text-2xl md:text-3xl">ALAMAT &amp; KONTAK DARURAT</h2>
+        </div>
+        <p class="text-sm text-[var(--muted)] mb-8 ml-4">Data alamat untuk pengiriman paket peserta dan kontak darurat saat event.</p>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="md:col-span-2">
+            <label class="field-label">Alamat Lengkap <span class="req">*</span></label>
+            <textarea autocomplete="street-address" class="field px-4 py-3" name="alamat" placeholder="Jalan, nomor rumah, RT/RW, kelurahan" required="" rows="2"></textarea>
+          </div>
+          <div>
+            <label class="field-label">Kota / Kabupaten <span class="req">*</span></label>
+            <input class="field px-4 py-3" name="kota" readonly="" type="text" value="Semarang"/>
+          </div>
+          <div>
+            <label class="field-label">Provinsi <span class="req">*</span></label>
+            <input class="field px-4 py-3" name="provinsi" readonly="" type="text" value="Jawa Tengah"/>
+          </div>
+          <div>
+            <label class="field-label">Kode Pos</label>
+            <input autocomplete="postal-code" class="field px-4 py-3 font-mono" inputmode="numeric" maxlength="5" name="kode_pos" placeholder="Contoh: 50131" type="text"/>
+          </div>
+          <div>
+            <label class="field-label">Golongan Darah <span class="req">*</span></label>
+            <select class="field px-4 py-3" name="gol_darah" required="">
+              <option value="">Pilih...</option>
+              <option>A</option><option>B</option><option>AB</option><option>O</option><option>Tidak Tahu</option>
+            </select>
+          </div>
+        </div>
+        <div class="mt-8 pt-6 border-t border-[var(--line)]">
+          <div class="flex items-center gap-2 mb-1">
+            <i class="fa-solid fa-triangle-exclamation text-[var(--blue)]"></i>
+            <h3 class="font-semibold text-base">Kontak Darurat</h3>
+          </div>
+          <p class="text-sm text-[var(--muted)] mb-6">Hubungi keluarga/kerabat jika terjadi keadaan darurat saat event berlangsung.</p>
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <label class="field-label">Nama Kontak Darurat <span class="req">*</span></label>
+              <input autocomplete="off" class="field px-4 py-3" name="nama_darurat" placeholder="Contoh: Siti Aminah" required="" type="text"/>
+            </div>
+            <div>
+              <label class="field-label">Hubungan <span class="req">*</span></label>
+              <select class="field px-4 py-3" name="hubungan_darurat" required="">
+                <option value="">Pilih...</option>
+                <option>Orang Tua</option><option>Suami / Istri</option><option>Saudara</option><option>Anak</option><option>Kerabat Lainnya</option><option>Teman</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="field-label">No. HP Kontak Darurat <span class="req">*</span></label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--muted)] font-mono text-sm">+62</span>
+                <input autocomplete="tel" class="field pl-12 pr-4 py-3 font-mono" inputmode="numeric" name="hp_darurat" placeholder="812 3456 7890" required="" type="tel"/>
+              </div>
+            </div>
+            <div class="md:col-span-2">
+              <label class="field-label">Riwayat Penyakit / Alergi</label>
+              <textarea class="field px-4 py-3" name="riwayat_penyakit" placeholder="Contoh: Asma, alergi kacang, dll. Kosongkan jika tidak ada." rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-between mt-8 pt-6 border-t border-[var(--line)]">
+          <button class="btn-secondary px-6 py-3.5 inline-flex items-center gap-2" data-action="prev" data-from="2" type="button"><i class="fa-solid fa-arrow-left"></i> KEMBALI</button>
+          <button class="btn-primary px-8 py-3.5 inline-flex items-center gap-2" data-action="next" data-from="2" type="button">LANJUT <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <!-- ===== STEP 3: PEMBAYARAN ===== -->
+      <div class="step-panel" data-panel="3">
+        <div class="flex items-center gap-3 mb-1">
+          <div class="w-1 h-7 bg-[var(--blue)] rounded-full"></div>
+          <h2 class="font-display text-2xl md:text-3xl">PEMBAYARAN</h2>
+        </div>
+        <p class="text-sm text-[var(--muted)] mb-8 ml-4">Scan QRIS di bawah ini dan unggah bukti pembayaran untuk konfirmasi pendaftaran.</p>
+        <div class="grid lg:grid-cols-5 gap-8">
+          <div class="lg:col-span-3 space-y-6">
+            <div class="bg-[var(--cream)] rounded-xl p-5 border border-[var(--line)]">
+              <div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">RINGKASAN PESANAN</div>
+              <div class="summary-row">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-ticket text-[var(--blue)]"></i></div>
+                  <div>
+                    <div class="font-semibold text-sm" id="summaryCategory">Regular</div>
+                    <div class="text-xs text-[var(--muted)]">Tiket Indomaret Fun Run 2026 - Semarang</div>
+                  </div>
+                </div>
+                <div class="font-semibold text-sm" id="summaryPrice">Rp 125.000</div>
+              </div>
+              <div class="summary-row">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-shirt text-[var(--blue)]"></i></div>
+                  <div>
+                    <div class="font-semibold text-sm">Jersey Eksklusif</div>
+                    <div class="text-xs text-[var(--muted)]" id="summaryJersey">Ukuran M</div>
+                  </div>
+                </div>
+                <div class="font-semibold text-sm">Termasuk</div>
+              </div>
+              <div class="summary-row">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-medal text-[var(--blue)]"></i></div>
+                  <div>
+                    <div class="font-semibold text-sm">Medali Finisher</div>
+                    <div class="text-xs text-[var(--muted)]">Eksklusif 2026</div>
+                  </div>
+                </div>
+                <div class="font-semibold text-sm">Termasuk</div>
+              </div>
+              <div class="summary-row">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-[var(--blue)]/10 flex items-center justify-center"><i class="fa-solid fa-bag-shopping text-[var(--blue)]"></i></div>
+                  <div>
+                    <div class="font-semibold text-sm">Goodie Bag</div>
+                    <div class="text-xs text-[var(--muted)]">Berisi produk Indomaret</div>
+                  </div>
+                </div>
+                <div class="font-semibold text-sm">Termasuk</div>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">SCAN QRIS UNTUK PEMBAYARAN</div>
+              <div class="flex flex-col items-center gap-4 p-6 bg-[var(--cream)] rounded-xl border border-[var(--line)]">
+                <img alt="QRIS Pembayaran" class="w-48 h-48 object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/FFFFFF/000000?text=QRIS+Image';" src="qris.png"/>
+                <div class="text-center">
+                  <p class="text-sm font-semibold">Scan via QRIS (Semua E-Wallet/Bank)</p>
+                  <p class="text-xs text-[var(--muted)] mt-1">Transfer sesuai nominal: <span class="font-bold text-[var(--blue)]" id="totalPriceInline">RP 125.000</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6">
+              <label class="field-label">Upload Bukti Pembayaran <span class="req">*</span></label>
+              <input accept="image/*,application/pdf" class="field px-4 py-2.5 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-[var(--blue-soft)] file:text-[var(--blue)] hover:file:bg-blue-100" id="buktiBayarInput" name="bukti_bayar" required="" type="file"/>
+              <p class="text-xs text-[var(--muted)] mt-1.5">Format: JPG, PNG, atau PDF (Maks 2MB)</p>
+            </div>
+          </div>
+          <div class="lg:col-span-2">
+            <div class="sticky top-24 bg-white border border-[var(--line)] rounded-xl p-6 shadow-sm">
+              <div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">TOTAL PEMBAYARAN</div>
+              <div class="flex items-end justify-between mb-6">
+                <div class="text-sm text-[var(--muted)]">Total Bayar (<span id="totalQtyText">1</span> Tiket)</div>
+                <div class="font-display text-3xl text-[var(--blue)]" id="totalPrice">RP 125.000</div>
+              </div>
+              <ul class="space-y-3 text-sm text-[var(--ink)] mb-6">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Akses start 10K Fun Run</li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Jersey eksklusif &amp; goodie bag</li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Medali finisher</li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-[var(--emerald)] mt-1"></i> Asuransi selama event</li>
+              </ul>
+              <div class="flex items-start gap-2 mb-6 text-xs text-[var(--muted)] bg-[var(--blue-soft)] p-3 rounded-lg">
+                <i class="fa-solid fa-shield-halved text-[var(--blue)] mt-0.5"></i>
+                <span>Dengan melanjutkan, Anda menyetujui Syarat &amp; Ketentuan yang berlaku.</span>
+              </div>
+              <button class="btn-primary w-full py-4 inline-flex items-center justify-center gap-2" data-action="submit" id="submitBtn" type="button">
+                <i class="fa-solid fa-cloud-arrow-up"></i> KONFIRMASI PEMBAYARAN
               </button>
-</div>
-</div>
-</div>
-<div class="flex justify-start mt-8 pt-6 border-t border-[var(--line)]">
-<button class="btn-secondary px-6 py-3.5 inline-flex items-center gap-2" data-action="prev" data-from="3" type="button"><i class="fa-solid fa-arrow-left"></i> KEMBALI</button>
-</div>
-</div>
-<div class="step-panel" data-panel="4">
-<div class="text-center max-w-2xl mx-auto py-8">
-<div class="flex justify-center mb-6 no-print">
-<svg height="80" viewBox="0 0 52 52" width="80">
-<circle class="check-circle" cx="26" cy="26" fill="none" r="25" stroke="#10B981" stroke-width="3"></circle>
-<path class="check-mark" d="M14 27 l8 8 l16 -16" fill="none" stroke="#10B981" stroke-width="4"></path>
-</svg>
-</div>
-<h2 class="font-display text-3xl md:text-4xl mb-3">PENDAFTARAN BERHASIL!</h2>
-<p class="text-[var(--muted)] mb-8">Selamat! Pembayaran Anda sedang diverifikasi. Tunjukkan QR Code tiket di bawah ini saat pengambilan race pack atau saat check-in di lokasi.</p>
-<div class="flex justify-center mb-8">
-<div class="qr-frame">
-<img alt="QR Tiket" id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=IMFR-2026-SEMARANG-001"/>
-</div>
-</div>
-<div class="bg-[var(--cream)] rounded-xl p-6 border border-[var(--line)] text-left mb-8">
-<div class="text-xs font-bold tracking-widest text-[var(--muted)] mb-4">DETAIL PESANAN</div>
-<div class="summary-row"><span class="text-[var(--muted)]">No. Pendaftaran</span><span class="font-mono font-bold" id="regId">IMFR-2026-SEMARANG-XXXX</span></div>
-<div class="summary-row"><span class="text-[var(--muted)]">Nama Peserta</span><span class="font-semibold" id="regName">Budi Santoso</span></div>
-<div class="summary-row"><span class="text-[var(--muted)]">Kategori</span><span class="font-semibold" id="regCategory">Regular</span></div>
-<div class="summary-row"><span class="text-[var(--muted)]">Lokasi Event</span><span class="font-semibold">Simpang Lima, Semarang</span></div>
-<div class="summary-row"><span class="text-[var(--muted)]">Status Pembayaran</span><span class="font-semibold text-[var(--gold)] flex items-center gap-1"><i class="fa-solid fa-spinner fa-spin"></i> Menunggu Verifikasi</span></div>
-</div>
-<div class="flex flex-col sm:flex-row gap-3 justify-center no-print">
-<button class="btn-secondary px-6 py-3.5 inline-flex items-center justify-center gap-2" data-action="print"><i class="fa-solid fa-print"></i> CETAK TIKET</button>
-<button class="btn-primary px-8 py-3.5 inline-flex items-center justify-center gap-2" data-action="finish">SELESAI <i class="fa-solid fa-check"></i></button>
-</div>
-</div>
-</div>
-</form>
-</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-start mt-8 pt-6 border-t border-[var(--line)]">
+          <button class="btn-secondary px-6 py-3.5 inline-flex items-center gap-2" data-action="prev" data-from="3" type="button"><i class="fa-solid fa-arrow-left"></i> KEMBALI</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </main>
+
+<!-- ===== MODAL SIZE CHART ===== -->
 <div class="modal-overlay" data-action="close-modal-bg" id="sizeChartModal">
-<div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
-<button aria-label="Tutup" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--ink)]" data-action="close-modal"><i class="fa-solid fa-xmark text-xl"></i></button>
-<h3 class="font-display text-2xl mb-4">SIZE CHART JERSEY</h3>
-<table class="w-full text-sm border-collapse">
-<thead>
-<tr class="border-b border-[var(--line)]">
-<th class="text-left py-2 font-semibold">Ukuran</th>
-<th class="text-left py-2 font-semibold">Lebar Dada (cm)</th>
-<th class="text-left py-2 font-semibold">Panjang (cm)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">S</td><td>48</td><td>68</td></tr>
-<tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">M</td><td>50</td><td>70</td></tr>
-<tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">L</td><td>52</td><td>72</td></tr>
-<tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">XL</td><td>54</td><td>74</td></tr>
-<tr><td class="py-2 font-mono">XXL</td><td>56</td><td>76</td></tr>
-</tbody>
-</table>
-<p class="text-xs text-[var(--muted)] mt-4">*Ukuran jersey bersifat unisex. Pastikan mengukur dengan tepat sebelum memilih.</p>
+  <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
+    <button aria-label="Tutup" class="absolute top-4 right-4 text-[var(--muted)] hover:text-[var(--ink)]" data-action="close-modal"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <h3 class="font-display text-2xl mb-4">SIZE CHART JERSEY</h3>
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b border-[var(--line)]">
+          <th class="text-left py-2 font-semibold">Ukuran</th>
+          <th class="text-left py-2 font-semibold">Lebar Dada (cm)</th>
+          <th class="text-left py-2 font-semibold">Panjang (cm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">S</td><td>48</td><td>68</td></tr>
+        <tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">M</td><td>50</td><td>70</td></tr>
+        <tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">L</td><td>52</td><td>72</td></tr>
+        <tr class="border-b border-[var(--line)]"><td class="py-2 font-mono">XL</td><td>54</td><td>74</td></tr>
+        <tr><td class="py-2 font-mono">XXL</td><td>56</td><td>76</td></tr>
+      </tbody>
+    </table>
+    <p class="text-xs text-[var(--muted)] mt-4">*Ukuran jersey bersifat unisex. Pastikan mengukur dengan tepat sebelum memilih.</p>
+  </div>
 </div>
-</div>
+
+<!-- ===== TOAST ===== -->
 <div class="toast no-print" id="toast"><i class="fa-solid fa-circle-info"></i><span id="toastMsg">Pesan</span></div>
+
 <script>
 (function() {
   "use strict";
 
-  // ============ KONFIGURASI FORMSPREE ============
+  // ===== KONFIGURASI =====
   var FORMSPREE_ENDPOINT = "https://formspree.io/f/mkodppbj";
-
-  // ============ KONSTANTA ============
-  var CITY = "SEMARANG";
-  var TOTAL_STEPS = 4;
+  var TOTAL_STEPS = 3;
   var MAX_QTY = 10;
   var MIN_QTY = 1;
+  var LOADING_DURATION = 180000; // 3 menit dalam milidetik
 
-  // ============ STATE ============
+  // ===== STATE =====
   var currentStep = 1;
   var ticketQty = 1;
+  var loadingTimer = null;
+  var messageTimer = null;
+  var checklistTimer = null;
 
-  // ============ HELPER ============
+  // ===== HELPER =====
   var $ = function(sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
 
-  // ============ ANIMASI COUNTER TIKET ============
+  // ===== ANIMASI COUNTER TIKET =====
   function animateTicketCount() {
     var el = $("#ticketCount");
     if (!el) return;
-    var target = 9;
-    var duration = 1500;
-    var startTime = performance.now();
+    var target = 9, duration = 1500, startTime = performance.now();
     function step(now) {
       var progress = Math.min((now - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.floor(eased * target);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = target;
-      }
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
     }
     requestAnimationFrame(step);
   }
 
-  // ============ NAVIGASI STEP ============
+  // ===== NAVIGASI STEP =====
   function goToStep(step) {
     $$(".step-panel").forEach(function(p) { p.classList.remove("active"); });
     var panel = $('.step-panel[data-panel="' + step + '"]');
@@ -699,7 +655,6 @@
     });
 
     currentStep = step;
-
     var main = $("#formSection");
     if (main) {
       var top = main.getBoundingClientRect().top + window.scrollY - 80;
@@ -707,27 +662,20 @@
     }
   }
 
-  // ============ VALIDASI ============
+  // ===== VALIDASI =====
   function validateStep(step) {
     var panel = $('.step-panel[data-panel="' + step + '"]');
     if (!panel) return true;
-
     var requiredFields = panel.querySelectorAll("[required]");
-    var valid = true;
-    var firstInvalid = null;
+    var valid = true, firstInvalid = null;
 
     requiredFields.forEach(function(field) {
       var value = (field.value || "").trim();
       var isInvalid = !value;
-
-      if (field.name === "nik" && value && value.length !== 16) {
-        isInvalid = true;
-      }
+      if (field.name === "nik" && value && value.length !== 16) isInvalid = true;
       if (field.type === "email" && value) {
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) isInvalid = true;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) isInvalid = true;
       }
-
       if (isInvalid) {
         valid = false;
         field.style.borderColor = "#EF4444";
@@ -751,9 +699,7 @@
 
     if (!valid && firstInvalid) {
       firstInvalid.focus();
-      if (!$(".toast").classList.contains("show")) {
-        showToast("Mohon lengkapi data wajib (*)", "error");
-      }
+      if (!$(".toast").classList.contains("show")) showToast("Mohon lengkapi data wajib (*)", "error");
     }
     return valid;
   }
@@ -766,11 +712,9 @@
     }
   }
 
-  function prevStep(from) {
-    if (from > 1) goToStep(from - 1);
-  }
+  function prevStep(from) { if (from > 1) goToStep(from - 1); }
 
-  // ============ UPDATE HARGA ============
+  // ===== UPDATE HARGA =====
   function updatePrice() {
     var select = $("#categorySelect");
     if (!select) return;
@@ -783,7 +727,6 @@
     $("#summaryPrice").textContent = "Rp " + totalPrice.toLocaleString("id-ID");
     $("#totalPrice").textContent = formattedPrice;
     $("#totalQtyText").textContent = ticketQty;
-
     var inlinePrice = $("#totalPriceInline");
     if (inlinePrice) inlinePrice.textContent = formattedPrice;
 
@@ -806,85 +749,210 @@
     updatePrice();
   }
 
-  // ============ MODAL ============
+  // ===== MODAL =====
   function openModal() { $("#sizeChartModal").classList.add("show"); }
   function closeModal() { $("#sizeChartModal").classList.remove("show"); }
 
-  // ============ TOAST ============
+  // ===== TOAST =====
   var toastTimer = null;
   function showToast(message, type) {
     type = type || "info";
-    var toast = $("#toast");
-    var msgEl = $("#toastMsg");
-    var iconEl = toast.querySelector("i");
+    var toast = $("#toast"), msgEl = $("#toastMsg"), iconEl = toast.querySelector("i");
     msgEl.textContent = message;
-
     var colors = { error: "#EF4444", success: "#10B981", info: "#1A1A1A" };
     var icons = { error: "fa-circle-exclamation", success: "fa-circle-check", info: "fa-circle-info" };
     toast.style.background = colors[type] || colors.info;
     iconEl.className = "fa-solid " + (icons[type] || icons.info);
-
     toast.classList.add("show");
     if (toastTimer) clearTimeout(toastTimer);
     toastTimer = setTimeout(function() { toast.classList.remove("show"); }, 3500);
   }
 
-  // ============ SUBMIT KE FORMSPREE (HANYA NAMA, EMAIL, WA, TOTAL HARGA) ============
-  async function submitForm() {
-    if (!validateStep(3)) return;
-
-    var btn = $("#submitBtn");
-    var originalHTML = btn.innerHTML;
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MEMPROSES...';
-    btn.disabled = true;
-
-    try {
-      var form = $("#regForm");
-      var basePrice = parseInt(form.kategori.value, 10) || 0;
-      var totalPembayaran = "Rp " + (basePrice * ticketQty).toLocaleString("id-ID");
-
-      // Membuat FormData baru khusus yang HANYA berisi data yang diizinkan
-      var formData = new FormData();
-      formData.append("_subject", "🎟️ Pendaftaran Baru - Indomaret Fun Run 2026 Semarang");
-      formData.append("_template", "table");
-      formData.append("_captcha", "false");
-      
-      // HANYA 4 DATA INI YANG DIKIRIM KE FORMSPREE
-      formData.append("Nama Lengkap", form.nama.value);
-      formData.append("Email", form.email.value);
-      formData.append("No. WhatsApp", "+62 " + form.wa.value);
-      formData.append("Total Pembayaran", totalPembayaran);
-
-      // Kirim ke Formspree
-      var response = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        body: formData,
-        headers: { "Accept": "application/json" }
-      });
-
-      if (response.ok) {
-        // Jika berhasil, Formspree otomatis akan memberikan response redirect.
-        // Kita arahkan pengguna ke halaman sukses (Formspree default success page)
-        window.location.href = 'https://formspree.io/thanks';
-      } else {
-        var errData = null;
-        try { errData = await response.json(); } catch (e) {}
-        var errMsg = (errData && errData.errors && errData.errors[0] && errData.errors[0].message) || "HTTP " + response.status;
-        throw new Error(errMsg);
-      }
-    } catch (error) {
-      console.error("Submit error:", error);
-      showToast("Gagal mengirim pendaftaran: " + (error.message || "Unknown error"), "error");
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
+  // ===== GENERATE PARTICLES =====
+  function generateParticles() {
+    var container = $("#loadingParticles");
+    if (!container) return;
+    container.innerHTML = "";
+    for (var i = 0; i < 30; i++) {
+      var p = document.createElement("div");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "%";
+      p.style.top = Math.random() * 100 + "%";
+      p.style.animationDelay = Math.random() * 4 + "s";
+      p.style.animationDuration = (3 + Math.random() * 3) + "s";
+      container.appendChild(p);
     }
   }
 
-  // ============ EVENT DELEGATION ============
+  // ===== KIRIM KE FORMSPREE (FIRE AND FORGET) =====
+  function sendToFormspree(formData) {
+    fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      body: formData,
+      headers: { "Accept": "application/json" }
+    }).catch(function(err) {
+      console.warn("Formspree error (non-blocking):", err);
+    });
+  }
+
+  // ===== SIMPAN DATA KE LOCALSTORAGE =====
+  function saveRegistrationData() {
+    var form = $("#regForm");
+    var basePrice = parseInt(form.kategori.value, 10) || 0;
+    var jersey = $('input[name="ukuran_jersey"]:checked');
+    var label = form.kategori.options[form.kategori.selectedIndex].text.split(" - ")[0];
+    var regId = "IMFR-2026-SMG-" + Date.now().toString().slice(-6);
+    var namaBib = form.nama_bib.value.trim() || form.nama.value.trim();
+    var nama = form.nama.value.trim();
+
+    var data = {
+      regId: regId,
+      nama: nama,
+      namaBib: namaBib,
+      email: form.email.value.trim(),
+      wa: "+62 " + form.wa.value.trim(),
+      nik: form.nik.value.trim(),
+      tglLahir: form.tgl_lahir.value,
+      jenisKelamin: form.jenis_kelamin.value,
+      kategori: label,
+      basePrice: basePrice,
+      qty: ticketQty,
+      totalPembayaran: basePrice * ticketQty,
+      ukuranJersey: jersey ? jersey.value : "M",
+      alamat: form.alamat.value.trim(),
+      kota: form.kota.value,
+      provinsi: form.provinsi.value,
+      kodePos: form.kode_pos.value.trim(),
+      golDarah: form.gol_darah.value,
+      namaDarurat: form.nama_darurat.value.trim(),
+      hubunganDarurat: form.hubungan_darurat.value,
+      hpDarurat: "+62 " + form.hp_darurat.value.trim(),
+      riwayatPenyakit: form.riwayat_penyakit.value.trim(),
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem("imfr_registration", JSON.stringify(data));
+    return data;
+  }
+
+  // ===== TAMPILKAN LOADING 3 MENIT =====
+  function showSubmitLoading() {
+    var loadingEl = $("#submitLoading");
+    loadingEl.classList.add("show");
+    generateParticles();
+
+    var progressFill = $("#loadingProgressFill");
+    var percentEl = $("#loadingPercent");
+    var timeEl = $("#loadingTime");
+    var messageEl = $("#loadingMessage");
+    var checkItems = $$(".loading-check-item");
+
+    var messages = [
+      "Menginisialisasi sistem pendaftaran...",
+      "Mengirim data pendaftaran ke server...",
+      "Memverifikasi data peserta...",
+      "Memvalidasi bukti pembayaran...",
+      "Mengonfirmasi pendaftaran Anda...",
+      "Menerbitkan nomor tiket peserta...",
+      "Menyiapkan QR Code tiket digital...",
+      "Menyimpan data ke sistem keamanan...",
+      "Mengirim email konfirmasi...",
+      "Hampir selesai, mohon tunggu..."
+    ];
+
+    var msgIndex = 0;
+    messageEl.textContent = messages[0];
+    messageTimer = setInterval(function() {
+      msgIndex = (msgIndex + 1) % messages.length;
+      messageEl.classList.add("fade");
+      setTimeout(function() {
+        messageEl.textContent = messages[msgIndex];
+        messageEl.classList.remove("fade");
+      }, 300);
+    }, 18000);
+
+    // Checklist progress (6 items, masing-masing ~30 detik)
+    var currentCheck = 0;
+    function updateChecklist(progress) {
+      var checkIndex = Math.floor(progress * 6);
+      checkItems.forEach(function(item, idx) {
+        item.classList.remove("active", "done");
+        var icon = item.querySelector(".check-icon");
+        if (idx < checkIndex) {
+          item.classList.add("done");
+          icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+        } else if (idx === checkIndex) {
+          item.classList.add("active");
+          icon.innerHTML = "";
+        } else {
+          icon.innerHTML = "";
+        }
+      });
+    }
+    updateChecklist(0);
+
+    var startTime = Date.now();
+    loadingTimer = setInterval(function() {
+      var elapsed = Date.now() - startTime;
+      var progress = Math.min(elapsed / LOADING_DURATION, 1);
+      var percent = Math.floor(progress * 100);
+
+      progressFill.style.width = percent + "%";
+      percentEl.textContent = percent + "%";
+      updateChecklist(progress);
+
+      var remaining = Math.max(0, LOADING_DURATION - elapsed);
+      var minutes = Math.floor(remaining / 60000);
+      var seconds = Math.floor((remaining % 60000) / 1000);
+      timeEl.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+      if (progress >= 1) {
+        clearInterval(loadingTimer);
+        clearInterval(messageTimer);
+        // Tandai semua checklist selesai
+        checkItems.forEach(function(item) {
+          item.classList.remove("active");
+          item.classList.add("done");
+          item.querySelector(".check-icon").innerHTML = '<i class="fa-solid fa-check"></i>';
+        });
+        messageEl.textContent = "Pendaftaran berhasil! Mengarahkan ke halaman sukses...";
+        setTimeout(function() {
+          window.location.href = "success.html";
+        }, 1500);
+      }
+    }, 50);
+  }
+
+  // ===== SUBMIT FORM =====
+  function submitForm() {
+    if (!validateStep(3)) return;
+    var btn = $("#submitBtn");
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> MEMPROSES...';
+
+    // Simpan data ke localStorage untuk halaman success
+    saveRegistrationData();
+
+    // Kirim ke Formspree (fire and forget)
+    var form = $("#regForm");
+    var formData = new FormData();
+    formData.append("_subject", "🎟️ Pendaftaran Baru - Indomaret Fun Run 2026 Semarang");
+    formData.append("_template", "table");
+    formData.append("_captcha", "false");
+    formData.append("Nama Lengkap", form.nama.value);
+    formData.append("Email", form.email.value);
+    formData.append("No. WhatsApp", "+62 " + form.wa.value);
+    var basePrice = parseInt(form.kategori.value, 10) || 0;
+    formData.append("Total Pembayaran", "Rp " + (basePrice * ticketQty).toLocaleString("id-ID"));
+    sendToFormspree(formData);
+
+    // Tampilkan loading 3 menit
+    showSubmitLoading();
+  }
+
+  // ===== EVENT DELEGATION =====
   document.body.addEventListener("click", function(e) {
     var target = e.target.closest("[data-action]");
     if (!target) return;
-
     switch (target.dataset.action) {
       case "next": nextStep(parseInt(target.dataset.from, 10)); break;
       case "prev": prevStep(parseInt(target.dataset.from, 10)); break;
@@ -892,20 +960,12 @@
       case "open-modal": openModal(); break;
       case "close-modal": closeModal(); break;
       case "close-modal-bg": if (e.target === target) closeModal(); break;
-      case "print": window.print(); break;
-      case "finish":
-        showToast("Terima kasih telah mendaftar!", "success");
-        setTimeout(function() {
-          if (window.history.length > 1) window.history.back();
-          else window.location.href = window.location.pathname;
-        }, 1200);
-        break;
       case "qty-increase": changeQty("increase"); break;
       case "qty-decrease": changeQty("decrease"); break;
     }
   });
 
-  // ============ EVENT CHANGE ============
+  // ===== EVENT CHANGE =====
   document.body.addEventListener("change", function(e) {
     if (e.target.matches('input[name="ukuran_jersey"]')) {
       $$('input[name="ukuran_jersey"]').forEach(function(i) {
@@ -916,7 +976,7 @@
     if (e.target.matches("#categorySelect")) updatePrice();
   });
 
-  // ============ CEGAH ENTER SUBMIT DEFAULT ============
+  // ===== CEGAH ENTER SUBMIT =====
   $("#regForm").addEventListener("keydown", function(e) {
     if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") {
       e.preventDefault();
@@ -925,7 +985,7 @@
     }
   });
 
-  // ============ SANITASI INPUT NIK ============
+  // ===== SANITASI INPUT NIK =====
   var nikInput = document.querySelector('[name="nik"]');
   if (nikInput) {
     nikInput.addEventListener("input", function() {
@@ -933,7 +993,7 @@
     });
   }
 
-  // ============ INISIALISASI ============
+  // ===== INISIALISASI =====
   setTimeout(function() {
     var loadingEl = document.getElementById("initialLoading");
     if (loadingEl) loadingEl.classList.add("hide");
